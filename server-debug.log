@@ -1,0 +1,1716 @@
+2026-03-20T04:48:17.349Z - GET /api/admin/panchangam
+2026-03-20T05:25:12.189Z - POST /api/user/login
+2026-03-20T05:25:17.260Z - POST /api/user/login
+2026-03-20T05:25:18.001Z - POST /api/user/login
+2026-03-20T05:25:18.585Z - POST /api/user/login
+2026-03-20T05:25:19.145Z - POST /api/user/login
+2026-03-20T05:25:20.160Z - POST /api/user/login
+2026-03-20T05:25:20.579Z - POST /api/user/login
+2026-03-20T05:25:20.951Z - POST /api/user/login
+2026-03-20T05:25:21.282Z - POST /api/user/login
+2026-03-20T05:25:21.649Z - POST /api/user/login
+2026-03-20T05:25:22.242Z - POST /api/user/login
+2026-03-20T05:25:22.712Z - POST /api/user/login
+2026-03-20T05:25:23.111Z - POST /api/user/login
+2026-03-20T05:25:23.464Z - POST /api/user/login
+2026-03-20T05:25:23.859Z - POST /api/user/login
+2026-03-20T05:25:24.611Z - POST /api/user/login
+2026-03-20T05:25:26.418Z - POST /api/user/login
+2026-03-20T05:45:00.061Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:02.002Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:02.726Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:03.265Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:03.693Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:04.086Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:04.494Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:04.836Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:11.562Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:12.311Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:12.830Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:13.286Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:13.668Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:14.067Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:14.437Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:14.837Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:15.253Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:15.674Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:16.079Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:16.451Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:16.866Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:45:18.163Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:09.486Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:11.069Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:11.669Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:12.044Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:12.382Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:12.749Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:13.121Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:13.505Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:13.874Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:14.405Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:14.823Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:15.174Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:15.558Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:15.925Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T05:48:21.339Z - POST /api/user/login
+User Controller Error: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.upsert()` invocation in
+D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:36
+
+   9 const { name, email, fcmToken } = req.body;
+  10 
+  11 try {
+→ 12   const user = await prisma.user.upsert(
+Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 8000 (AtlasError): empty database name not allowed
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:729
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1592
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1199
+	at 6392d636f37b708da11fe341451b0d6c/atlasproxy/session_proxy.go:1089
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:398
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/proxy_session.go:114
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/session.go:274
+	at 10gen/mongonet@v0.0.0-20260113205843-abe8b18a476f/server.go:449
+	at src/runtime/asm_arm64.s:1223, labels: {}`
+    at $n.handleRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (D:\Projects Folder\Valikatti\backend\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async loginUser (D:\Projects Folder\Valikatti\backend\controllers\userController.js:12:18)
+2026-03-20T06:18:13.647Z - GET /api/admin/panchangam
+2026-03-20T06:18:14.293Z - GET /api/admin/rasi-palan
+2026-03-20T06:18:14.616Z - GET /api/admin/panchangam
+2026-03-20T06:18:14.755Z - GET /api/admin/rasi-palan
+2026-03-20T06:18:19.331Z - POST /api/admin/rasi-palan
+2026-03-20T06:18:19.574Z - GET /api/admin/rasi-palan
+2026-03-20T06:21:18.458Z - POST /api/user/login
+2026-03-20T06:21:25.462Z - POST /api/user/select-rasi
+2026-03-20T06:21:25.980Z - GET /api/user/daily?rasi=Simmam
+2026-03-20T06:22:05.261Z - POST /api/admin/rasi-palan
+2026-03-20T06:22:05.494Z - GET /api/admin/rasi-palan
+2026-03-20T06:22:20.090Z - GET /api/user/daily?rasi=Simmam
+2026-03-20T06:22:48.533Z - GET /api/admin/panchangam
+2026-03-20T06:22:48.616Z - GET /api/admin/panchangam
+2026-03-20T06:23:02.498Z - GET /api/admin/users
+2026-03-20T06:23:02.568Z - GET /api/admin/users
+2026-03-20T06:23:14.052Z - GET /api/admin/users
+2026-03-20T06:23:14.123Z - GET /api/admin/users
+2026-03-20T06:23:51.280Z - GET /api/admin/rasi-palan
+2026-03-20T06:23:52.234Z - GET /api/admin/panchangam
+2026-03-20T06:23:53.436Z - GET /api/admin/panchangam
+2026-03-20T06:23:54.614Z - GET /api/admin/users
+2026-03-20T06:23:54.682Z - GET /api/admin/users
+2026-03-20T06:23:57.779Z - GET /api/admin/users
+2026-03-20T06:23:57.874Z - GET /api/admin/users
+2026-03-20T06:23:59.039Z - GET /api/admin/panchangam
+2026-03-20T06:23:59.117Z - GET /api/admin/panchangam
+2026-03-20T06:24:11.291Z - GET /api/admin/rasi-palan
+2026-03-20T06:24:19.562Z - GET /api/admin/rasi-palan
+2026-03-20T06:24:19.564Z - GET /api/admin/rasi-palan
+2026-03-20T06:24:59.364Z - GET /api/admin/panchangam
+2026-03-20T06:24:59.429Z - GET /api/admin/panchangam
+2026-03-20T06:24:59.926Z - GET /api/admin/users
+2026-03-20T06:24:59.998Z - GET /api/admin/users
+2026-03-20T06:25:02.816Z - GET /api/admin/users
+2026-03-20T06:25:02.896Z - GET /api/admin/users
+2026-03-20T06:25:03.375Z - GET /api/admin/panchangam
+2026-03-20T06:25:03.438Z - GET /api/admin/panchangam
+2026-03-20T06:25:04.509Z - GET /api/admin/users
+2026-03-20T06:25:04.579Z - GET /api/admin/users
+2026-03-20T06:25:10.478Z - GET /api/admin/panchangam
+2026-03-20T06:25:10.548Z - GET /api/admin/panchangam
+2026-03-20T06:25:16.790Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:16.791Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:21.371Z - GET /api/admin/panchangam
+2026-03-20T06:25:21.439Z - GET /api/admin/panchangam
+2026-03-20T06:25:22.646Z - GET /api/admin/users
+2026-03-20T06:25:22.719Z - GET /api/admin/users
+2026-03-20T06:25:26.344Z - GET /api/admin/users
+2026-03-20T06:25:26.404Z - GET /api/admin/users
+2026-03-20T06:25:30.660Z - GET /api/admin/panchangam
+2026-03-20T06:25:30.724Z - GET /api/admin/panchangam
+2026-03-20T06:25:31.441Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:31.442Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:33.485Z - GET /api/admin/panchangam
+2026-03-20T06:25:33.571Z - GET /api/admin/panchangam
+2026-03-20T06:25:40.084Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:40.090Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:51.069Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:51.071Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:51.580Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:51.650Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:51.728Z - GET /api/admin/rasi-palan
+2026-03-20T06:25:51.811Z - GET /api/admin/rasi-palan
+2026-03-20T06:32:37.101Z - POST /api/admin/rasi-palan
+2026-03-20T06:32:37.680Z - GET /api/admin/rasi-palan
+2026-03-20T06:32:44.684Z - POST /api/admin/rasi-palan
+2026-03-20T06:32:44.879Z - GET /api/admin/rasi-palan
+2026-03-20T06:32:53.675Z - GET /api/admin/panchangam
+2026-03-20T06:32:53.747Z - GET /api/admin/panchangam
+2026-03-20T06:32:55.606Z - GET /api/admin/users
+2026-03-20T06:32:55.679Z - GET /api/admin/users
+2026-03-20T06:34:13.208Z - GET /api/admin/users
+2026-03-20T06:34:13.275Z - GET /api/admin/users
+2026-03-20T06:34:48.793Z - GET /api/admin/users
+2026-03-20T06:34:49.218Z - GET /api/admin/users
+2026-03-20T06:34:50.826Z - GET /api/admin/panchangam
+2026-03-20T06:34:50.901Z - GET /api/admin/panchangam
+2026-03-20T06:34:52.064Z - GET /api/admin/rasi-palan
+2026-03-20T06:34:52.135Z - GET /api/admin/rasi-palan
+2026-03-20T06:35:00.439Z - GET /api/admin/rasi-palan
+2026-03-20T06:35:00.504Z - GET /api/admin/rasi-palan
+2026-03-20T06:35:02.264Z - GET /api/admin/users
+2026-03-20T06:35:02.376Z - GET /api/admin/users
+2026-03-20T06:35:03.323Z - GET /api/admin/panchangam
+2026-03-20T06:35:03.439Z - GET /api/admin/panchangam
+2026-03-20T06:35:09.438Z - GET /api/admin/users
+2026-03-20T06:35:09.515Z - GET /api/admin/users
+2026-03-20T06:35:23.277Z - GET /api/admin/panchangam
+2026-03-20T06:35:23.345Z - GET /api/admin/panchangam
+2026-03-20T06:36:37.949Z - GET /api/admin/panchangam
+2026-03-20T07:49:40.645Z - POST /api/admin/panchangam
+2026-03-20T07:49:41.391Z - GET /api/admin/panchangam
+2026-03-20T07:50:07.390Z - GET /api/user/daily?rasi=Simmam
+2026-03-20T08:07:21.646Z - POST /api/user/login
+2026-03-20T08:07:28.603Z - POST /api/user/select-rasi
+2026-03-20T08:07:29.159Z - GET /api/user/daily?rasi=Mesham
+2026-03-20T08:08:09.234Z - POST /api/user/login
+2026-03-20T08:08:09.747Z - GET /api/user/daily?rasi=Mesham
+2026-03-20T09:45:15.899Z - POST /api/user/login
+2026-03-20T09:45:21.028Z - POST /api/user/select-rasi
+2026-03-20T09:45:21.472Z - GET /api/user/daily?rasi=Thulaam
+2026-03-20T09:45:47.551Z - POST /api/user/login
+2026-03-20T09:45:47.954Z - GET /api/user/daily?rasi=Thulaam
+2026-03-20T09:56:48.835Z - POST /api/user/login
+2026-03-20T09:57:00.331Z - GET /api/user/daily?rasi=Simmam&type=daily
+2026-03-20T09:57:00.333Z - GET /api/user/panchangam
+2026-03-20T09:57:03.471Z - GET /api/user/panchangam
+2026-03-20T09:57:13.080Z - GET /api/user/panchangam
+2026-03-20T09:57:20.092Z - GET /api/user/daily?rasi=Simmam&type=daily
+2026-03-20T09:57:24.521Z - GET /api/user/daily?rasi=Simmam&type=weekly
+2026-03-20T09:57:28.084Z - GET /api/user/daily?rasi=Simmam&type=monthly
+2026-03-20T09:57:31.368Z - GET /api/user/daily?rasi=Simmam&type=yearly
+2026-03-20T09:57:41.373Z - GET /api/user/festivals
+2026-03-20T10:08:34.355Z - POST /api/user/login
+2026-03-20T10:08:44.151Z - POST /api/user/select-rasi
+2026-03-20T10:08:44.655Z - GET /api/user/daily?rasi=Simmam&type=daily
+2026-03-20T10:08:44.658Z - GET /api/user/panchangam
+2026-03-20T10:16:34.202Z - GET /api/admin/rasi-palan
+2026-03-20T10:16:35.470Z - GET /api/admin/rasi-palan
+2026-03-20T10:16:43.178Z - GET /api/admin/panchangam
+2026-03-20T10:16:43.266Z - GET /api/admin/panchangam
+2026-03-20T10:16:44.243Z - GET /api/admin/festivals
+2026-03-20T10:16:44.332Z - GET /api/admin/festivals
+2026-03-20T10:16:45.778Z - GET /api/admin/mugurtham
+2026-03-20T10:16:45.863Z - GET /api/admin/mugurtham
+2026-03-20T10:17:01.560Z - POST /api/admin/mugurtham
+2026-03-20T10:17:01.828Z - GET /api/admin/mugurtham
+2026-03-20T10:17:03.848Z - GET /api/admin/nalla-neram
+2026-03-20T10:17:03.933Z - GET /api/admin/nalla-neram
+2026-03-20T10:17:21.296Z - POST /api/admin/nalla-neram
+2026-03-20T10:17:21.564Z - GET /api/admin/nalla-neram
+2026-03-20T10:17:24.330Z - GET /api/admin/users
+2026-03-20T10:17:24.463Z - GET /api/admin/users
+2026-03-20T10:17:36.324Z - GET /api/admin/users
+2026-03-20T10:17:36.427Z - GET /api/admin/users
+2026-03-20T10:17:37.033Z - GET /api/admin/nalla-neram
+2026-03-20T10:17:37.113Z - GET /api/admin/nalla-neram
+2026-03-20T10:17:37.752Z - GET /api/admin/mugurtham
+2026-03-20T10:17:37.839Z - GET /api/admin/mugurtham
+2026-03-20T10:17:39.169Z - GET /api/admin/festivals
+2026-03-20T10:17:39.251Z - GET /api/admin/festivals
+2026-03-20T10:17:39.872Z - GET /api/admin/panchangam
+2026-03-20T10:17:39.962Z - GET /api/admin/panchangam

@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  rasi      String?
+  fcmToken  String?
+  createdAt DateTime @default(now())
+}
+
+model RasiPalan {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  rasi      String
+  type      String   // daily, weekly, monthly, yearly
+  content   String
+  date      DateTime
+}
+
+model Panchangam {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  sunrise   String
+  sunset    String
+  details   String
+}
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  message   String
+  target    String   // all, rasi_name, user_id
+  createdAt DateTime @default(now())
+}
+
+model Admin {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  password String
+}
+
+model Festival {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  date      DateTime
+  description String?
+}
+
+model NallaNeram {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  morning   String   // e.g., "09:00 - 10:30"
+  evening   String   // e.g., "16:30 - 18:00"
+}
+
+model Mugurtham {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  time      String
+  type      String   // e.g., "Valarpirai", "Theipirai"
+  description String?
+}
