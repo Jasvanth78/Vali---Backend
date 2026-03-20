@@ -1,12 +1,12 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const { PrismaClient } = require('@prisma/client');
 const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
 require('./utils/firebase');
-
-dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
