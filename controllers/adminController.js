@@ -4,8 +4,31 @@ const { generateToken } = require('../utils/auth');
 const fs = require('fs');
 const path = require('path');
 const logFile = path.join(__dirname, '../server-debug.log');
+const admin = require('../utils/firebase');
 
 const prisma = new PrismaClient();
+
+const sendPushNotificationToAll = async (title, body) => {
+  try {
+    const users = await prisma.user.findMany({
+      where: { NOT: { fcmToken: null } },
+      select: { fcmToken: true }
+    });
+
+    const tokens = users.map(u => u.fcmToken).filter(t => t);
+    if (tokens.length === 0) return;
+
+    const message = {
+      notification: { title, body },
+      tokens: tokens,
+    };
+
+    const response = await admin.messaging().sendEachForMulticast(message);
+    console.log(`Successfully sent ${response.successCount} notifications.`);
+  } catch (error) {
+    console.error('Error sending push notifications:', error);
+  }
+};
 
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -59,6 +82,13 @@ const createRasiPalan = async (req, res) => {
     const palan = await prisma.rasiPalan.create({
       data: { rasi, type, content, date: new Date(date) },
     });
+
+    // Send notification
+    sendPushNotificationToAll(
+      "New Celestial Guidance",
+      `Your ${type} prediction for ${rasi} is now available!`
+    );
+
     res.status(201).json(palan);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -172,6 +202,12 @@ const bulkCreateRasiPalan = async (req, res) => {
         date: new Date(item.date)
       }))
     });
+
+    sendPushNotificationToAll(
+      "Daily Updates",
+      "Fresh Rasi Palan predictions have been uploaded for all signs!"
+    );
+
     res.status(201).json({ message: `Successfully added ${palans.count} records.`, count: palans.count });
   } catch (error) {
     res.status(500).json({ error: error.message });
