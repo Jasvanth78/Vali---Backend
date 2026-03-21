@@ -163,6 +163,21 @@ const createNallaNeram = async (req, res) => {
   }
 };
 
+const bulkCreateRasiPalan = async (req, res) => {
+  const { data } = req.body; // Expecting an array of objects
+  try {
+    const palans = await prisma.rasiPalan.createMany({
+      data: data.map(item => ({
+        ...item,
+        date: new Date(item.date)
+      }))
+    });
+    res.status(201).json({ message: `Successfully added ${palans.count} records.`, count: palans.count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getAllNallaNeram = async (req, res) => {
   try {
     const list = await prisma.nallaNeram.findMany();
@@ -185,5 +200,6 @@ module.exports = {
   getAllMugurtham,
   createNallaNeram,
   getAllNallaNeram,
+  bulkCreateRasiPalan,
   getAllUsers 
 };

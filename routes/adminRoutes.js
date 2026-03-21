@@ -12,6 +12,7 @@ const {
   getAllMugurtham,
   createNallaNeram,
   getAllNallaNeram,
+  bulkCreateRasiPalan,
   getAllUsers 
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
@@ -23,6 +24,7 @@ router.get('/dashboard', getDashboardStats);
 
 // Rasi Palan
 router.post('/rasi-palan', createRasiPalan);
+router.post('/rasi-palan/bulk', bulkCreateRasiPalan);
 router.get('/rasi-palan', getAllRasiPalan);
 
 // Panchangam
