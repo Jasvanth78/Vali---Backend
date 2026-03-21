@@ -130,14 +130,15 @@ const getFestivals = async (req, res) => {
 };
 
 const askAIJothidar = async (req, res) => {
-  const { rasi, message } = req.body;
+  const { rasi, message, language } = req.body;
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   try {
     const today = new Date().toDateString();
     const systemPrompt = `You are "AI Jothidar", a wise and compassionate astrology expert. 
     Provide guidance based on the user's Rasi: ${rasi} and today's date: ${today}. 
-    Keep responses insightful, mystical yet practical.`;
+    Keep responses insightful, mystical yet practical.
+    IMPORTANT: Respond strictly in ${language === 'ta' ? 'Tamil' : 'English'}.`;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -147,7 +148,7 @@ const askAIJothidar = async (req, res) => {
       ],
     });
 
-    res.json({ response: completion.choices[0].message.content });
+    res.json({ reply: completion.choices[0].message.content });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
