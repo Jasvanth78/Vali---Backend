@@ -73,3 +73,22 @@ model Mugurtham {
   type      String   // e.g., "Valarpirai", "Theipirai"
   description String?
 }
+
+model AppContent {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  key   String @unique
+  ta    String // Tamil content
+  en    String // English content
+  updatedAt DateTime @updatedAt
+}
+
+model AppCard {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  key       String   @unique
+  titleTa   String
+  titleEn   String
+  imageUrl  String?
+  isEnabled Boolean  @default(true)
+  order     Int      @default(0)
+  screen    String   // screen key to navigate to
+}

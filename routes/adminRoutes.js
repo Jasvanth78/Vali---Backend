@@ -13,7 +13,13 @@ const {
   createNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,
-  getAllUsers 
+  getAllUsers,
+  getAppContent,
+  updateAppContent,
+  manualSendNotification,
+  getAppCards,
+  upsertAppCard,
+  deleteAppCard
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
 
@@ -21,6 +27,17 @@ const router = express.Router();
 
 router.post('/login', adminLogin);
 router.get('/dashboard', getDashboardStats);
+router.post('/send-notification', manualSendNotification);
+
+// App Content
+router.get('/app-content', getAppContent);
+router.put('/app-content', updateAppContent);
+
+// App Cards
+router.get('/app-cards', getAppCards);
+router.post('/app-cards', upsertAppCard);
+router.put('/app-cards/:id', upsertAppCard);
+router.delete('/app-cards/:id', deleteAppCard);
 
 // Rasi Palan
 router.post('/rasi-palan', createRasiPalan);

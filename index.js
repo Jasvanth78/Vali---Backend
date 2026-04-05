@@ -9,6 +9,10 @@ const userRoutes = require('./routes/userRoutes');
 require('./utils/firebase');
 
 const app = express();
+const httpServer = require('http').createServer(app);
+const { initSocket } = require('./utils/socket');
+initSocket(httpServer);
+
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 7000;
 
@@ -44,6 +48,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error', message: err.message });
 });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
