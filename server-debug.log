@@ -1849,3 +1849,5 @@ Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 80
 2026-04-03T06:21:19.484Z - GET /api/admin/app-content
 2026-04-03T06:22:11.681Z - GET /api/admin/rasi-palan
 2026-04-03T06:22:11.995Z - GET /api/admin/rasi-palan
+2026-04-05T09:38:34.825Z - GET /api/user/app-cards
+2026-04-05T09:39:34.723Z - GET /api/user/app-cards

@@ -1,5 +1,5 @@
 const express = require('express');
-const { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar } = require('../controllers/userController');
+const { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount } = require('../controllers/userController');
 const { getAppContent, getAppCards } = require('../controllers/adminController');
 
 const router = express.Router();
@@ -16,6 +16,7 @@ router.get('/mugurtham', getMugurtham);
 router.get('/nalla-neram', getNallaNeram);
 router.post('/ai-chat', askAIJothidar);
 router.get('/app-content', getAppContent);
-router.get('/app-cards', getAppCards);
+router.get('/notifications/:email', getUserNotifications);
+router.delete('/delete-account/:email', deleteUserAccount);
 
 module.exports = router;

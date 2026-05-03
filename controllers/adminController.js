@@ -311,6 +311,21 @@ const manualSendNotification = async (req, res) => {
 
     console.log(`Manual notification: Sending to ${tokens.length} devices. Title: "${title}"`);
 
+    // Save notification to database first
+    try {
+      await prisma.notification.create({
+        data: {
+          title,
+          message: body,
+          target,
+          createdAt: new Date(),
+        }
+      });
+    } catch (dbError) {
+      console.error('Error saving notification to DB:', dbError.message);
+      // Continue with sending the FCM message even if DB saving fails
+    }
+
     const message = {
       notification: { title, body },
       tokens: tokens,

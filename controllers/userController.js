@@ -74,7 +74,7 @@ const getRasiPalan = async (req, res) => {
     if (palan) {
       res.json(palan);
     } else {
-      res.status(404).json({ message: `No ${type || 'daily'} prediction found for today.` });
+      res.status(200).json({ content: `No ${type || 'daily'} prediction found for today yet.` });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -100,7 +100,7 @@ const getDailyPanchangam = async (req, res) => {
     if (panchangam) {
       res.json(panchangam);
     } else {
-      res.status(404).json({ message: 'No panchangam found for today.' });
+      res.status(200).json(null);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -195,7 +195,7 @@ const getNallaNeram = async (req, res) => {
     if (nalla_neram) {
       res.json(nalla_neram);
     } else {
-      res.status(404).json({ message: 'No nalla neram found for today.' });
+      res.status(200).json(null);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -224,4 +224,48 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar };
+const getUserNotifications = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { rasi: true }
+    });
+
+    const notifications = await prisma.notification.findMany({
+      where: {
+        OR: [
+          { target: 'all' },
+          { target: 'rasi', title: { contains: user?.rasi || '' } }, // Fallback logic for rasi targeting
+          // Better logic: if we store rasi name in a specific field, use that. 
+          // Based on adminController, target is 'all' or 'rasi'.
+        ]
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 20
+    });
+
+    res.json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteUserAccount = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const user = await prisma.user.delete({
+      where: { email },
+    });
+    res.json({ message: 'User deleted successfully', user });
+  } catch (error) {
+    fs.appendFileSync(logFile, `Delete User Error: ${error.message}\n${error.stack}\n`);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount };
