@@ -203,10 +203,9 @@ const getNallaNeram = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { originalEmail, name, email, rasi } = req.body;
+  const { originalEmail, name, email, rasi, star, dob, tob, pob } = req.body;
 
   try {
-    // If updating email, check if new email already exists (and it's not the same as original)
     if (email !== originalEmail) {
       const existingUser = await prisma.user.findUnique({ where: { email } });
       if (existingUser) {
@@ -216,7 +215,7 @@ const updateUserProfile = async (req, res) => {
 
     const updatedUser = await prisma.user.update({
       where: { email: originalEmail },
-      data: { name, email, rasi },
+      data: { name, email, rasi, star, dob, tob, pob },
     });
     res.json(updatedUser);
   } catch (error) {
@@ -228,25 +227,43 @@ const getUserNotifications = async (req, res) => {
   const { email } = req.params;
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { email },
-      select: { rasi: true }
-    });
-
-    const notifications = await prisma.notification.findMany({
-      where: {
-        OR: [
-          { target: 'all' },
-          { target: 'rasi', title: { contains: user?.rasi || '' } }, // Fallback logic for rasi targeting
-          // Better logic: if we store rasi name in a specific field, use that. 
-          // Based on adminController, target is 'all' or 'rasi'.
-        ]
-      },
+    let notifications = await prisma.notification.findMany({
       orderBy: {
         createdAt: 'desc'
       },
-      take: 20
+      take: 50
     });
+
+    if (notifications.length === 0) {
+      const defaults = [
+        {
+          title: 'வரவேற்கிறோம்! (Welcome to Valikatti)',
+          message: 'வழி காட்டி செயலியில் தங்களை அன்போடு வரவேற்கிறோம். தினசரி ராசி பலன் மற்றும் பஞ்சாங்கம் விவரங்களை பார்க்கவும்.',
+          target: 'all'
+        },
+        {
+          title: 'இன்றைய பஞ்சாங்கம் நேரலையில் உள்ளது',
+          message: 'இன்றைய நல்ல நேரம், ராகு காலம் மற்றும் எமகண்டம் நேரங்கள் புதுப்பிக்கப்பட்டுள்ளன.',
+          target: 'all'
+        },
+        {
+          title: 'தினசரி ராசி பலன் (Daily Horoscope)',
+          message: 'உங்கள் ராசிக்கான இன்றைய நட்சத்திர பலன்கள் மற்றும் வழிகாட்டுதல்கள் தயாராக உள்ளன.',
+          target: 'all'
+        }
+      ];
+
+      for (const d of defaults) {
+        await prisma.notification.create({ data: d });
+      }
+
+      notifications = await prisma.notification.findMany({
+        orderBy: {
+          createdAt: 'desc'
+        },
+        take: 50
+      });
+    }
 
     res.json(notifications);
   } catch (error) {

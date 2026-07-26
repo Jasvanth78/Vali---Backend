@@ -18,6 +18,10 @@ model User {
   name      String
   email     String   @unique
   rasi      String?
+  star      String?
+  dob       String?
+  tob       String?
+  pob       String?
   fcmToken  String?
   createdAt DateTime @default(now())
 }

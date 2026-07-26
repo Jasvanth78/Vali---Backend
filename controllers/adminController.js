@@ -417,18 +417,110 @@ const deleteAppCard = async (req, res) => {
   }
 };
 
+const updateRasiPalan = async (req, res) => {
+  const { id } = req.params;
+  const { rasi, type, content, date } = req.body;
+  try {
+    const updated = await prisma.rasiPalan.update({
+      where: { id },
+      data: { rasi, type, content, date: new Date(date) },
+    });
+    emitLiveUpdate('rasi_palan_updated', updated);
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteRasiPalan = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.rasiPalan.delete({ where: { id } });
+    emitLiveUpdate('rasi_palan_updated', { action: 'delete', id });
+    res.json({ message: 'Prediction deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deletePanchangam = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.panchangam.delete({ where: { id } });
+    emitLiveUpdate('panchangam_updated', { action: 'delete', id });
+    res.json({ message: 'Panchangam deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteFestival = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.festival.delete({ where: { id } });
+    emitLiveUpdate('festivals_updated', { action: 'delete', id });
+    res.json({ message: 'Festival deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteMugurtham = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.mugurtham.delete({ where: { id } });
+    emitLiveUpdate('mugurtham_updated', { action: 'delete', id });
+    res.json({ message: 'Mugurtham deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateMugurtham = async (req, res) => {
+  const { id } = req.params;
+  const { date, time, type, description } = req.body;
+  try {
+    const updated = await prisma.mugurtham.update({
+      where: { id },
+      data: { date: new Date(date), time, type, description },
+    });
+    emitLiveUpdate('mugurtham_updated', updated);
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteNallaNeram = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.nallaNeram.delete({ where: { id } });
+    emitLiveUpdate('nalla_neram_updated', { action: 'delete', id });
+    res.json({ message: 'Nalla Neram deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = { 
   adminLogin, 
   getDashboardStats, 
   createRasiPalan, 
+  updateRasiPalan,
+  deleteRasiPalan,
   getAllRasiPalan, 
   createPanchangam, 
+  deletePanchangam,
   getAllPanchangam, 
   createFestival, 
+  deleteFestival,
   getAllFestivals, 
   createMugurtham,
+  updateMugurtham,
+  deleteMugurtham,
   getAllMugurtham,
   createNallaNeram,
+  deleteNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,
   getAllUsers,

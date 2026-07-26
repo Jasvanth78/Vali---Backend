@@ -16,6 +16,7 @@ router.get('/mugurtham', getMugurtham);
 router.get('/nalla-neram', getNallaNeram);
 router.post('/ai-chat', askAIJothidar);
 router.get('/app-content', getAppContent);
+router.get('/app-cards', getAppCards);
 router.get('/notifications/:email', getUserNotifications);
 router.delete('/delete-account/:email', deleteUserAccount);
 
