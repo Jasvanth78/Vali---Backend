@@ -57,10 +57,11 @@ model Admin {
 }
 
 model Festival {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  date      DateTime
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  date        DateTime
   description String?
+  imageUrl    String?
 }
 
 model NallaNeram {

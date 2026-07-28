@@ -10,6 +10,7 @@ const {
   deletePanchangam,
   getAllPanchangam, 
   createFestival, 
+  updateFestival,
   deleteFestival,
   getAllFestivals, 
   createMugurtham,
@@ -26,7 +27,8 @@ const {
   manualSendNotification,
   getAppCards,
   upsertAppCard,
-  deleteAppCard
+  deleteAppCard,
+  createBlog
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
 
@@ -35,6 +37,7 @@ const router = express.Router();
 router.post('/login', adminLogin);
 router.get('/dashboard', getDashboardStats);
 router.post('/send-notification', manualSendNotification);
+router.post('/blogs', createBlog);
 
 // App Content
 router.get('/app-content', getAppContent);
@@ -60,6 +63,7 @@ router.get('/panchangam', getAllPanchangam);
 
 // Festivals
 router.post('/festivals', createFestival);
+router.put('/festivals/:id', updateFestival);
 router.delete('/festivals/:id', deleteFestival);
 router.get('/festivals', getAllFestivals);
 

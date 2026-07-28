@@ -6,6 +6,7 @@ const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 const adminRoutes = require('./routes/adminRoutes');
 const userRoutes = require('./routes/userRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 require('./utils/firebase');
 
 const app = express();
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 // Main Routes
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Basic Health Check Route
 app.get('/', (req, res) => {

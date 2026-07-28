@@ -61,6 +61,27 @@ const sendPushNotificationToAll = async (title, body) => {
 
     const message = {
       notification: { title, body },
+      android: {
+        priority: 'high',
+        notification: {
+          title,
+          body,
+          channelId: 'valikati_high_importance_channel_v2',
+          priority: 'high',
+          sound: 'default',
+          defaultSound: true,
+          defaultVibrateTimings: true,
+          visibility: 'public',
+        },
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: 'default',
+            contentAvailable: true,
+          },
+        },
+      },
       tokens: tokens,
     };
 
@@ -182,10 +203,10 @@ const getAllPanchangam = async (req, res) => {
 
 // Festival CRUD
 const createFestival = async (req, res) => {
-  const { name, date, description } = req.body;
+  const { name, date, description, imageUrl } = req.body;
   try {
     const festival = await prisma.festival.create({
-      data: { name, date: new Date(date), description },
+      data: { name, date: new Date(date), description, imageUrl },
     });
     emitLiveUpdate('festivals_updated', festival);
     res.status(201).json(festival);
@@ -194,9 +215,26 @@ const createFestival = async (req, res) => {
   }
 };
 
+const updateFestival = async (req, res) => {
+  const { id } = req.params;
+  const { name, date, description, imageUrl } = req.body;
+  try {
+    const festival = await prisma.festival.update({
+      where: { id },
+      data: { name, date: new Date(date), description, imageUrl },
+    });
+    emitLiveUpdate('festivals_updated', festival);
+    res.json(festival);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getAllFestivals = async (req, res) => {
   try {
-    const list = await prisma.festival.findMany();
+    const list = await prisma.festival.findMany({
+      orderBy: { date: 'asc' }
+    });
     res.json(list);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -328,6 +366,27 @@ const manualSendNotification = async (req, res) => {
 
     const message = {
       notification: { title, body },
+      android: {
+        priority: 'high',
+        notification: {
+          title,
+          body,
+          channelId: 'valikati_high_importance_channel_v2',
+          priority: 'high',
+          sound: 'default',
+          defaultSound: true,
+          defaultVibrateTimings: true,
+          visibility: 'public',
+        },
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: 'default',
+            contentAvailable: true,
+          },
+        },
+      },
       tokens: tokens,
     };
 
@@ -502,6 +561,55 @@ const deleteNallaNeram = async (req, res) => {
   }
 };
 
+// Blog upload controller - pushes push notifications to all devices when a blog is created
+const createBlog = async (req, res) => {
+  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, image } = req.body;
+  try {
+    const blogTitle = titleTa || titleEn || 'புதிய பதிவு';
+
+    // 1. Send push notification to all FCM devices
+    sendPushNotificationToAll(
+      'புதிய ஆன்மீகப் பதிவு 📖',
+      `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`
+    );
+
+    // 2. Save notification to database if model exists
+    try {
+      if (prisma.notification) {
+        await prisma.notification.create({
+          data: {
+            title: 'புதிய ஆன்மீகப் பதிவு 📖',
+            body: `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`,
+            type: 'blog'
+          }
+        });
+      }
+    } catch (dbErr) {
+      console.log('Blog notification DB log warning:', dbErr.message);
+    }
+
+    // 3. Emit live socket event
+    emitLiveUpdate('blog_created', {
+      titleTa,
+      titleEn,
+      categoryTa,
+      categoryEn,
+      contentTa,
+      contentEn,
+      author,
+      image,
+      createdAt: new Date()
+    });
+
+    res.status(201).json({
+      message: 'Blog published successfully & notifications sent to all users.',
+      blog: { titleTa, titleEn, categoryTa, categoryEn, author, date: new Date().toISOString() }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = { 
   adminLogin, 
   getDashboardStats, 
@@ -513,6 +621,7 @@ module.exports = {
   deletePanchangam,
   getAllPanchangam, 
   createFestival, 
+  updateFestival,
   deleteFestival,
   getAllFestivals, 
   createMugurtham,
@@ -529,5 +638,6 @@ module.exports = {
   manualSendNotification,
   getAppCards,
   upsertAppCard,
-  deleteAppCard
+  deleteAppCard,
+  createBlog
 };
