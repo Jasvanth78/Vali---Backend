@@ -641,6 +641,7 @@ const updateBlog = async (req, res) => {
         imageUrl: imageUrl || null
       }
     });
+    emitLiveUpdate('blog_updated', blog);
     res.json({ message: 'Blog updated successfully', blog });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -651,6 +652,7 @@ const deleteBlog = async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.blog.delete({ where: { id } });
+    emitLiveUpdate('blog_deleted', { id });
     res.json({ message: 'Blog deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -738,6 +740,7 @@ const updateEvent = async (req, res) => {
         imageUrl: imageUrl || null
       }
     });
+    emitLiveUpdate('event_updated', event);
     res.json({ message: 'Event updated successfully', event });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -748,6 +751,7 @@ const deleteEvent = async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.event.delete({ where: { id } });
+    emitLiveUpdate('event_deleted', { id });
     res.json({ message: 'Event deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });

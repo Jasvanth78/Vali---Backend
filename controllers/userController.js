@@ -54,18 +54,13 @@ const selectRasi = async (req, res) => {
 
 const getRasiPalan = async (req, res) => {
   const { rasi, type } = req.query; // type can be daily, weekly, monthly, yearly
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
 
   try {
+    const targetType = type || 'daily';
+    const whereClause = rasi ? { rasi, type: targetType } : { type: targetType };
+
     const palan = await prisma.rasiPalan.findFirst({
-      where: {
-        rasi,
-        type: type || 'daily',
-        date: {
-          gte: today,
-        },
-      },
+      where: whereClause,
       orderBy: {
         date: 'desc'
       }
@@ -74,7 +69,7 @@ const getRasiPalan = async (req, res) => {
     if (palan) {
       res.json(palan);
     } else {
-      res.status(200).json({ content: `No ${type || 'daily'} prediction found for today yet.` });
+      res.status(200).json({ content: `No ${targetType} prediction found yet.` });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -82,46 +77,26 @@ const getRasiPalan = async (req, res) => {
 };
 
 const getDailyPanchangam = async (req, res) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   try {
     const panchangam = await prisma.panchangam.findFirst({
-      where: {
-        date: {
-          gte: today,
-        },
-      },
       orderBy: {
-        date: 'asc'
+        date: 'desc'
       }
     });
 
-    if (panchangam) {
-      res.json(panchangam);
-    } else {
-      res.status(200).json(null);
-    }
+    res.json(panchangam || null);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
 const getFestivals = async (req, res) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   try {
     const festivals = await prisma.festival.findMany({
-      where: {
-        date: {
-          gte: today,
-        },
-      },
       orderBy: {
         date: 'asc'
       },
-      take: 10
+      take: 20
     });
     res.json(festivals);
   } catch (error) {
@@ -155,20 +130,12 @@ const askAIJothidar = async (req, res) => {
 };
 
 const getMugurtham = async (req, res) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   try {
     const mugurtha_naalkal = await prisma.mugurtham.findMany({
-      where: {
-        date: {
-          gte: today,
-        },
-      },
       orderBy: {
         date: 'asc'
       },
-      take: 10
+      take: 20
     });
     res.json(mugurtha_naalkal);
   } catch (error) {
@@ -177,26 +144,14 @@ const getMugurtham = async (req, res) => {
 };
 
 const getNallaNeram = async (req, res) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   try {
     const nalla_neram = await prisma.nallaNeram.findFirst({
-      where: {
-        date: {
-          gte: today,
-        },
-      },
       orderBy: {
-        date: 'asc'
+        date: 'desc'
       }
     });
 
-    if (nalla_neram) {
-      res.json(nalla_neram);
-    } else {
-      res.status(200).json(null);
-    }
+    res.json(nalla_neram || null);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
