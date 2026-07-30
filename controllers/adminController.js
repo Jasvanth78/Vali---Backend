@@ -355,7 +355,7 @@ const manualSendNotification = async (req, res) => {
         data: {
           title,
           message: body,
-          target,
+          target: target === 'rasi' ? rasi : target,
           createdAt: new Date(),
         }
       });
@@ -561,52 +561,217 @@ const deleteNallaNeram = async (req, res) => {
   }
 };
 
-// Blog upload controller - pushes push notifications to all devices when a blog is created
-const createBlog = async (req, res) => {
-  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, image } = req.body;
+// --- BLOG CONTROLLERS ---
+const getAllBlogs = async (req, res) => {
   try {
+    const blogs = await prisma.blog.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(blogs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createBlog = async (req, res) => {
+  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, imageUrl, image, sendNotification } = req.body;
+  try {
+    const finalImage = imageUrl || image || null;
     const blogTitle = titleTa || titleEn || 'புதிய பதிவு';
 
-    // 1. Send push notification to all FCM devices
-    sendPushNotificationToAll(
-      'புதிய ஆன்மீகப் பதிவு 📖',
-      `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`
-    );
-
-    // 2. Save notification to database if model exists
-    try {
-      if (prisma.notification) {
-        await prisma.notification.create({
-          data: {
-            title: 'புதிய ஆன்மீகப் பதிவு 📖',
-            body: `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`,
-            type: 'blog'
-          }
-        });
+    const blog = await prisma.blog.create({
+      data: {
+        titleTa,
+        titleEn: titleEn || null,
+        categoryTa: categoryTa || 'பொது',
+        categoryEn: categoryEn || 'General',
+        contentTa,
+        contentEn: contentEn || null,
+        author: author || 'Valikatti Team',
+        imageUrl: finalImage
       }
-    } catch (dbErr) {
-      console.log('Blog notification DB log warning:', dbErr.message);
-    }
-
-    // 3. Emit live socket event
-    emitLiveUpdate('blog_created', {
-      titleTa,
-      titleEn,
-      categoryTa,
-      categoryEn,
-      contentTa,
-      contentEn,
-      author,
-      image,
-      createdAt: new Date()
     });
 
+    if (sendNotification !== false) {
+      sendPushNotificationToAll(
+        'புதிய ஆன்மீகப் பதிவு 📖',
+        `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`
+      );
+
+      try {
+        if (prisma.notification) {
+          await prisma.notification.create({
+            data: {
+              title: 'புதிய ஆன்மீகப் பதிவு 📖',
+              message: `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`,
+              target: 'all'
+            }
+          });
+        }
+      } catch (dbErr) {
+        console.log('Blog notification DB log warning:', dbErr.message);
+      }
+    }
+
+    emitLiveUpdate('blog_created', blog);
+
     res.status(201).json({
-      message: 'Blog published successfully & notifications sent to all users.',
-      blog: { titleTa, titleEn, categoryTa, categoryEn, author, date: new Date().toISOString() }
+      message: 'Blog published successfully & saved to database.',
+      blog
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+const updateBlog = async (req, res) => {
+  const { id } = req.params;
+  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, imageUrl } = req.body;
+  try {
+    const blog = await prisma.blog.update({
+      where: { id },
+      data: {
+        titleTa,
+        titleEn: titleEn || null,
+        categoryTa,
+        categoryEn,
+        contentTa,
+        contentEn: contentEn || null,
+        author,
+        imageUrl: imageUrl || null
+      }
+    });
+    res.json({ message: 'Blog updated successfully', blog });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteBlog = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.blog.delete({ where: { id } });
+    res.json({ message: 'Blog deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// --- EVENT CONTROLLERS ---
+const getAllEvents = async (req, res) => {
+  try {
+    const events = await prisma.event.findMany({
+      orderBy: { date: 'asc' }
+    });
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createEvent = async (req, res) => {
+  const { titleTa, titleEn, date, time, locationTa, locationEn, descriptionTa, descriptionEn, imageUrl, sendNotification } = req.body;
+  try {
+    const eventTitle = titleTa || titleEn || 'வரவிருக்கும் நிகழ்வு';
+
+    const event = await prisma.event.create({
+      data: {
+        titleTa,
+        titleEn: titleEn || null,
+        date: new Date(date),
+        time: time || null,
+        locationTa: locationTa || null,
+        locationEn: locationEn || null,
+        descriptionTa: descriptionTa || null,
+        descriptionEn: descriptionEn || null,
+        imageUrl: imageUrl || null
+      }
+    });
+
+    if (sendNotification !== false) {
+      sendPushNotificationToAll(
+        'வரவிருக்கும் ஆன்மீக நிகழ்வு 📅',
+        `நிகழ்வு: "${eventTitle}". விரிவான விபரங்களை அறிய கிளிக் செய்யவும்!`
+      );
+
+      try {
+        if (prisma.notification) {
+          await prisma.notification.create({
+            data: {
+              title: 'வரவிருக்கும் ஆன்மீக நிகழ்வு 📅',
+              message: `நிகழ்வு: "${eventTitle}". விரிவான விபரங்களை அறிய கிளிக் செய்யவும்!`,
+              target: 'all'
+            }
+          });
+        }
+      } catch (dbErr) {
+        console.log('Event notification DB log warning:', dbErr.message);
+      }
+    }
+
+    emitLiveUpdate('event_created', event);
+
+    res.status(201).json({
+      message: 'Upcoming Event published successfully',
+      event
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateEvent = async (req, res) => {
+  const { id } = req.params;
+  const { titleTa, titleEn, date, time, locationTa, locationEn, descriptionTa, descriptionEn, imageUrl } = req.body;
+  try {
+    const event = await prisma.event.update({
+      where: { id },
+      data: {
+        titleTa,
+        titleEn: titleEn || null,
+        date: new Date(date),
+        time: time || null,
+        locationTa: locationTa || null,
+        locationEn: locationEn || null,
+        descriptionTa: descriptionTa || null,
+        descriptionEn: descriptionEn || null,
+        imageUrl: imageUrl || null
+      }
+    });
+    res.json({ message: 'Event updated successfully', event });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.event.delete({ where: { id } });
+    res.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const sendDailyMorningNotification = async () => {
+  try {
+    const title = 'இன்றைய ராசி பலன் 🌅';
+    const body = 'உங்கள் ராசிக்கான இன்றைய சுப பலன்களைப் பார்க்க உடனே கிளிக் செய்யுங்கள்!';
+
+    await prisma.notification.create({
+      data: {
+        title,
+        message: body,
+        target: 'all',
+        createdAt: new Date(),
+      }
+    });
+
+    await sendPushNotificationToAll(title, body);
+    console.log('Daily 7:00 AM notification sent successfully.');
+  } catch (error) {
+    console.error('Error in sendDailyMorningNotification:', error.message);
   }
 };
 
@@ -639,5 +804,16 @@ module.exports = {
   getAppCards,
   upsertAppCard,
   deleteAppCard,
-  createBlog
+  getAllBlogs,
+  createBlog,
+  updateBlog,
+  deleteBlog,
+  getAllEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  sendPushNotificationToAll,
+  sendDailyMorningNotification
 };
+
+

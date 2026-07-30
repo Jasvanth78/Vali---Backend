@@ -28,7 +28,14 @@ const {
   getAppCards,
   upsertAppCard,
   deleteAppCard,
-  createBlog
+  createBlog,
+  getAllBlogs,
+  updateBlog,
+  deleteBlog,
+  getAllEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
 
@@ -37,7 +44,18 @@ const router = express.Router();
 router.post('/login', adminLogin);
 router.get('/dashboard', getDashboardStats);
 router.post('/send-notification', manualSendNotification);
+
+// Blogs
+router.get('/blogs', getAllBlogs);
 router.post('/blogs', createBlog);
+router.put('/blogs/:id', updateBlog);
+router.delete('/blogs/:id', deleteBlog);
+
+// Events
+router.get('/events', getAllEvents);
+router.post('/events', createEvent);
+router.put('/events/:id', updateEvent);
+router.delete('/events/:id', deleteEvent);
 
 // App Content
 router.get('/app-content', getAppContent);
@@ -82,3 +100,4 @@ router.get('/nalla-neram', getAllNallaNeram);
 router.get('/users', getAllUsers);
 
 module.exports = router;
+

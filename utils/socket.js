@@ -36,6 +36,7 @@ const emitLiveUpdate = (event, data) => {
 
 const emitAppContentUpdate = (data) => {
   if (io) {
+    io.emit("app_content_updated", data);
     io.emit("appContentUpdate", data);
   }
 };

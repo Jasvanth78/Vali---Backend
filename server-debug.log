@@ -2091,3 +2091,38 @@ Raw query failed. Code: `unknown`. Message: `Kind: Command failed: Error code 80
 2026-07-28T15:26:14.588Z - GET /api/user/app-cards
 2026-07-28T15:26:20.930Z - GET /api/user/app-content
 2026-07-28T15:26:20.931Z - GET /api/user/app-cards
+2026-07-28T16:06:40.381Z - POST /api/admin/send-notification
+2026-07-28T16:07:23.912Z - GET /api/admin/app-cards
+2026-07-28T16:07:23.990Z - GET /api/admin/app-cards
+2026-07-28T16:08:03.469Z - POST /api/upload
+2026-07-28T16:08:25.596Z - GET /api/admin/nalla-neram
+2026-07-28T16:08:25.691Z - GET /api/admin/nalla-neram
+2026-07-28T16:08:29.051Z - GET /api/admin/festivals
+2026-07-28T16:08:29.129Z - GET /api/admin/festivals
+2026-07-28T16:33:57.647Z - GET /api/admin/blogs
+2026-07-28T16:33:58.679Z - GET /api/admin/blogs
+2026-07-28T16:34:05.331Z - GET /api/admin/app-cards
+2026-07-28T16:34:05.456Z - GET /api/admin/app-cards
+2026-07-28T16:34:49.264Z - POST /api/upload
+2026-07-28T16:45:37.796Z - GET /api/admin/app-cards
+2026-07-28T16:45:38.467Z - GET /api/admin/app-cards
+2026-07-28T16:45:47.934Z - POST /api/upload
+2026-07-28T16:46:06.192Z - POST /api/admin/app-cards
+2026-07-28T16:46:06.496Z - GET /api/admin/app-cards
+2026-07-28T16:46:14.515Z - POST /api/upload
+2026-07-28T16:51:51.689Z - GET /api/admin/app-cards
+2026-07-28T16:51:54.600Z - GET /api/admin/app-cards
+2026-07-28T16:53:41.850Z - POST /api/upload
+2026-07-28T16:53:49.184Z - ERROR: request entity too large
+PayloadTooLargeError: request entity too large
+    at readStream (D:\Projects Folder\Valikatti\backend\node_modules\raw-body\index.js:163:17)
+    at getRawBody (D:\Projects Folder\Valikatti\backend\node_modules\raw-body\index.js:116:12)
+    at read (D:\Projects Folder\Valikatti\backend\node_modules\body-parser\lib\read.js:79:3)
+    at jsonParser (D:\Projects Folder\Valikatti\backend\node_modules\body-parser\lib\types\json.js:138:5)
+    at Layer.handle [as handle_request] (D:\Projects Folder\Valikatti\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\Projects Folder\Valikatti\backend\node_modules\express\lib\router\index.js:328:13)
+    at D:\Projects Folder\Valikatti\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (D:\Projects Folder\Valikatti\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (D:\Projects Folder\Valikatti\backend\node_modules\express\lib\router\index.js:280:10)
+    at cors (D:\Projects Folder\Valikatti\backend\node_modules\cors\lib\index.js:188:7)
+2026-07-28T16:53:49.192Z - GET /api/admin/app-cards

@@ -34,6 +34,18 @@ app.use((req, res, next) => {
   next();
 });
 
+const cron = require('node-cron');
+const { sendDailyMorningNotification } = require('./controllers/adminController');
+
+// Schedule daily 7:00 AM IST notification
+cron.schedule('0 7 * * *', () => {
+  console.log('Cron: Triggering 7:00 AM Daily Morning Rasi Palan notification...');
+  sendDailyMorningNotification();
+}, {
+  scheduled: true,
+  timezone: "Asia/Kolkata"
+});
+
 // Main Routes
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);

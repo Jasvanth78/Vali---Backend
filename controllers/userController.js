@@ -227,6 +227,14 @@ const getUserNotifications = async (req, res) => {
   const { email } = req.params;
 
   try {
+    let userRasi = null;
+    if (email && email !== 'all') {
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (user && user.rasi) {
+        userRasi = user.rasi.trim().toLowerCase();
+      }
+    }
+
     let notifications = await prisma.notification.findMany({
       orderBy: {
         createdAt: 'desc'
@@ -265,7 +273,15 @@ const getUserNotifications = async (req, res) => {
       });
     }
 
-    res.json(notifications);
+    // Filter notifications based on target (all vs specific rasi)
+    const filteredNotifications = notifications.filter(n => {
+      const target = (n.target || 'all').trim().toLowerCase();
+      if (target === 'all') return true;
+      if (userRasi && target === userRasi) return true;
+      return false;
+    });
+
+    res.json(filteredNotifications);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

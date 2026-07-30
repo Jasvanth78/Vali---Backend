@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { uploadToCloudinary } = require('../utils/cloudinary');
+const { uploadToCatbox } = require('../utils/catbox');
 
-// Multer memory storage configuration (handles single/multiple file uploads into Buffer)
+// Multer memory storage configuration (handles single file upload into Buffer)
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
@@ -11,7 +12,7 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    if (file.mimetype && file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {
       cb(new Error('Only image files (JPG, PNG, GIF, WEBP, SVG) are allowed!'), false);
@@ -19,38 +20,54 @@ const upload = multer({
   },
 });
 
-// POST /api/upload - Upload image file to Cloudinary
+// POST /api/upload - Upload image file with multi-tier fallback (Cloudinary -> Catbox -> Data URI)
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No image file provided' });
     }
 
-    // Check if Cloudinary is configured
-    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
-      // Return base64 or temporary URL fallback if Cloudinary is not configured yet
-      const base64Data = req.file.buffer.toString('base64');
-      const dataUri = `data:${req.file.mimetype};base64,${base64Data}`;
-      
-      return res.json({
-        url: dataUri,
-        warning: 'Cloudinary environment variables missing in backend .env. Returned data URI as fallback.',
-      });
+    // Tier 1: Try Cloudinary if environment variables exist
+    if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+      try {
+        const folder = req.body.folder || 'valikatti_uploads';
+        const result = await uploadToCloudinary(req.file.buffer, folder);
+
+        return res.json({
+          url: result.secure_url,
+          public_id: result.public_id,
+          format: result.format,
+          width: result.width,
+          height: result.height,
+        });
+      } catch (cloudinaryError) {
+        console.warn('⚠️ Cloudinary upload failed (403/Forbidden/Invalid credentials), falling back to Catbox:', cloudinaryError.message || cloudinaryError);
+      }
     }
 
-    const folder = req.body.folder || 'valikatti_uploads';
-    const result = await uploadToCloudinary(req.file.buffer, folder);
+    // Tier 2: Fallback to Catbox public upload service (reliable direct image URL)
+    try {
+      const catboxUrl = await uploadToCatbox(req.file.buffer, req.file.originalname, req.file.mimetype);
+      console.log('✅ Uploaded to Catbox fallback:', catboxUrl);
+      return res.json({
+        url: catboxUrl,
+        provider: 'catbox',
+      });
+    } catch (catboxError) {
+      console.warn('⚠️ Catbox fallback failed, using Data URI fallback:', catboxError.message || catboxError);
+    }
 
-    res.json({
-      url: result.secure_url,
-      public_id: result.public_id,
-      format: result.format,
-      width: result.width,
-      height: result.height,
+    // Tier 3: Convert buffer to base64 Data URI fallback
+    const base64Data = req.file.buffer.toString('base64');
+    const dataUri = `data:${req.file.mimetype};base64,${base64Data}`;
+
+    return res.json({
+      url: dataUri,
+      warning: 'Returned data URI fallback.',
     });
   } catch (error) {
     console.error('Image Upload Error:', error);
-    res.status(500).json({ error: error.message || 'Image upload failed' });
+    return res.status(500).json({ error: error.message || 'Image upload failed' });
   }
 });
 
