@@ -55,9 +55,37 @@ const selectRasi = async (req, res) => {
 const getRasiPalan = async (req, res) => {
   const { rasi, type } = req.query; // type can be daily, weekly, monthly, yearly
 
+  const rasiMap = {
+    'aries': 'Mesham',
+    'taurus': 'Rishabam',
+    'gemini': 'Midhunam',
+    'cancer': 'Kadagam',
+    'leo': 'Simmam',
+    'virgo': 'Kanni',
+    'libra': 'Thulaam',
+    'scorpio': 'Viruchigam',
+    'sagittarius': 'Dhanusu',
+    'capricorn': 'Magaram',
+    'aquarius': 'Kumbam',
+    'pisces': 'Meenam',
+    'mesham': 'Mesham',
+    'rishabam': 'Rishabam',
+    'midhunam': 'Midhunam',
+    'kadagam': 'Kadagam',
+    'simmam': 'Simmam',
+    'kanni': 'Kanni',
+    'thulaam': 'Thulaam',
+    'viruchigam': 'Viruchigam',
+    'dhanusu': 'Dhanusu',
+    'magaram': 'Magaram',
+    'kumbam': 'Kumbam',
+    'meenam': 'Meenam',
+  };
+
   try {
     const targetType = type || 'daily';
-    const whereClause = rasi ? { rasi, type: targetType } : { type: targetType };
+    const canonicalRasi = rasi ? (rasiMap[rasi.toLowerCase()] || rasi) : null;
+    const whereClause = canonicalRasi ? { rasi: canonicalRasi, type: targetType } : { type: targetType };
 
     const palan = await prisma.rasiPalan.findFirst({
       where: whereClause,
@@ -180,15 +208,30 @@ const updateUserProfile = async (req, res) => {
 
 const getUserNotifications = async (req, res) => {
   const { email } = req.params;
+  const { rasi: queryRasi } = req.query;
+
+  const rasiMap = {
+    'aries': 'Mesham', 'taurus': 'Rishabam', 'gemini': 'Midhunam', 'cancer': 'Kadagam',
+    'leo': 'Simmam', 'virgo': 'Kanni', 'libra': 'Thulaam', 'scorpio': 'Viruchigam',
+    'sagittarius': 'Dhanusu', 'capricorn': 'Magaram', 'aquarius': 'Kumbam', 'pisces': 'Meenam',
+    'mesham': 'Mesham', 'rishabam': 'Rishabam', 'midhunam': 'Midhunam', 'kadagam': 'Kadagam',
+    'simmam': 'Simmam', 'kanni': 'Kanni', 'thulaam': 'Thulaam', 'viruchigam': 'Viruchigam',
+    'dhanusu': 'Dhanusu', 'magaram': 'Magaram', 'kumbam': 'Kumbam', 'meenam': 'Meenam'
+  };
 
   try {
     let userRasi = null;
     if (email && email !== 'all') {
       const user = await prisma.user.findUnique({ where: { email } });
       if (user && user.rasi) {
-        userRasi = user.rasi.trim().toLowerCase();
+        userRasi = user.rasi.trim();
       }
     }
+    if (!userRasi && queryRasi && queryRasi.trim().length > 0) {
+      userRasi = queryRasi.trim();
+    }
+
+    const canonicalUserRasi = userRasi ? (rasiMap[userRasi.toLowerCase()] || userRasi) : null;
 
     let notifications = await prisma.notification.findMany({
       orderBy: {
@@ -230,9 +273,10 @@ const getUserNotifications = async (req, res) => {
 
     // Filter notifications based on target (all vs specific rasi)
     const filteredNotifications = notifications.filter(n => {
-      const target = (n.target || 'all').trim().toLowerCase();
-      if (target === 'all') return true;
-      if (userRasi && target === userRasi) return true;
+      const targetRaw = (n.target || 'all').trim();
+      const canonicalTarget = rasiMap[targetRaw.toLowerCase()] || targetRaw;
+      if (canonicalTarget.toLowerCase() === 'all') return true;
+      if (canonicalUserRasi && canonicalTarget.toLowerCase() === canonicalUserRasi.toLowerCase()) return true;
       return false;
     });
 

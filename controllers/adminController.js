@@ -327,15 +327,37 @@ const manualSendNotification = async (req, res) => {
       return res.status(500).json({ error: 'Firebase Admin SDK not initialized. Check your service account configuration.' });
     }
 
+    const rasiMap = {
+      'aries': 'Mesham', 'taurus': 'Rishabam', 'gemini': 'Midhunam', 'cancer': 'Kadagam',
+      'leo': 'Simmam', 'virgo': 'Kanni', 'libra': 'Thulaam', 'scorpio': 'Viruchigam',
+      'sagittarius': 'Dhanusu', 'capricorn': 'Magaram', 'aquarius': 'Kumbam', 'pisces': 'Meenam',
+      'mesham': 'Mesham', 'rishabam': 'Rishabam', 'midhunam': 'Midhunam', 'kadagam': 'Kadagam',
+      'simmam': 'Simmam', 'kanni': 'Kanni', 'thulaam': 'Thulaam', 'viruchigam': 'Viruchigam',
+      'dhanusu': 'Dhanusu', 'magaram': 'Magaram', 'kumbam': 'Kumbam', 'meenam': 'Meenam'
+    };
+
     let users;
+    let canonicalTarget = target;
     if (target === 'all') {
       users = await prisma.user.findMany({
         where: { NOT: { fcmToken: null } },
         select: { fcmToken: true }
       });
     } else if (target === 'rasi' && rasi) {
+      canonicalTarget = rasiMap[rasi.toLowerCase()] || rasi;
+      const targetAliases = Object.keys(rasiMap).filter(k => rasiMap[k].toLowerCase() === canonicalTarget.toLowerCase());
+      const possibleValues = Array.from(new Set([
+        canonicalTarget,
+        rasi,
+        ...targetAliases,
+        ...targetAliases.map(a => a.charAt(0).toUpperCase() + a.slice(1))
+      ]));
+
       users = await prisma.user.findMany({
-        where: { rasi: rasi, NOT: { fcmToken: null } },
+        where: {
+          rasi: { in: possibleValues },
+          NOT: { fcmToken: null }
+        },
         select: { fcmToken: true }
       });
     } else {
@@ -355,7 +377,7 @@ const manualSendNotification = async (req, res) => {
         data: {
           title,
           message: body,
-          target: target === 'rasi' ? rasi : target,
+          target: target === 'rasi' ? canonicalTarget : target,
           createdAt: new Date(),
         }
       });
