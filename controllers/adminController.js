@@ -146,6 +146,75 @@ const getDashboardStats = async (req, res) => {
   }
 };
 
+const sendPushNotificationToRasi = async (targetRasi, title, body) => {
+  try {
+    if (!admin || !admin.messaging) return;
+
+    const rasiMap = {
+      'aries': 'Mesham', 'taurus': 'Rishabam', 'gemini': 'Midhunam', 'cancer': 'Kadagam',
+      'leo': 'Simmam', 'virgo': 'Kanni', 'libra': 'Thulaam', 'scorpio': 'Viruchigam',
+      'sagittarius': 'Dhanusu', 'capricorn': 'Magaram', 'aquarius': 'Kumbam', 'pisces': 'Meenam',
+      'mesham': 'Mesham', 'rishabam': 'Rishabam', 'midhunam': 'Midhunam', 'kadagam': 'Kadagam',
+      'simmam': 'Simmam', 'kanni': 'Kanni', 'thulaam': 'Thulaam', 'viruchigam': 'Viruchigam',
+      'dhanusu': 'Dhanusu', 'magaram': 'Magaram', 'kumbam': 'Kumbam', 'meenam': 'Meenam'
+    };
+
+    const canonicalTarget = rasiMap[targetRasi.toLowerCase()] || targetRasi;
+    const targetAliases = Object.keys(rasiMap).filter(k => rasiMap[k].toLowerCase() === canonicalTarget.toLowerCase());
+    const possibleValues = Array.from(new Set([
+      canonicalTarget,
+      targetRasi,
+      ...targetAliases,
+      ...targetAliases.map(a => a.charAt(0).toUpperCase() + a.slice(1))
+    ]));
+
+    const users = await prisma.user.findMany({
+      where: {
+        rasi: { in: possibleValues },
+        NOT: { fcmToken: null }
+      },
+      select: { fcmToken: true }
+    });
+
+    const tokens = users.map(u => u.fcmToken).filter(t => t && t.length > 0);
+
+    // Save notification to database targeting this specific rasi
+    try {
+      await prisma.notification.create({
+        data: {
+          title,
+          message: body,
+          target: canonicalTarget,
+          createdAt: new Date(),
+        }
+      });
+    } catch (_) {}
+
+    if (tokens.length === 0) return;
+
+    const message = {
+      notification: { title, body },
+      android: {
+        priority: 'high',
+        notification: {
+          title,
+          body,
+          channelId: 'valikati_high_importance_channel_v2',
+          priority: 'high',
+          sound: 'default',
+        },
+      },
+      apns: { payload: { aps: { sound: 'default', contentAvailable: true } } },
+      tokens: tokens,
+    };
+
+    await admin.messaging().sendEachForMulticast(message);
+    console.log(`Rasi-targeted notification sent to ${tokens.length} devices for ${canonicalTarget}`);
+  } catch (error) {
+    console.error('Error sending rasi notification:', error.message);
+  }
+};
+
 // Rasi Palan CRUD
 const createRasiPalan = async (req, res) => {
   const { rasi, type, content, date } = req.body;
@@ -154,10 +223,11 @@ const createRasiPalan = async (req, res) => {
       data: { rasi, type, content, date: new Date(date) },
     });
 
-    // Send notification
-    sendPushNotificationToAll(
-      "New Celestial Guidance",
-      `Your ${type} prediction for ${rasi} is now available!`
+    // Send notification targeting ONLY users of this specific Rasi
+    sendPushNotificationToRasi(
+      rasi,
+      "தினசரி ராசி பலன் 🌅",
+      `உங்கள் ${rasi} ராசிக்கான ${type} பலன்கள் வெளியிடப்பட்டுள்ளன!`
     );
 
     // Emit live update to all connected apps
@@ -338,17 +408,20 @@ const manualSendNotification = async (req, res) => {
 
     let users;
     let canonicalTarget = target;
+    const targetRasiInput = (target === 'rasi' || target === 'individual') ? rasi : target;
+
     if (target === 'all') {
+      canonicalTarget = 'all';
       users = await prisma.user.findMany({
         where: { NOT: { fcmToken: null } },
         select: { fcmToken: true }
       });
-    } else if (target === 'rasi' && rasi) {
-      canonicalTarget = rasiMap[rasi.toLowerCase()] || rasi;
+    } else if (targetRasiInput && targetRasiInput.trim().length > 0) {
+      canonicalTarget = rasiMap[targetRasiInput.toLowerCase()] || targetRasiInput;
       const targetAliases = Object.keys(rasiMap).filter(k => rasiMap[k].toLowerCase() === canonicalTarget.toLowerCase());
       const possibleValues = Array.from(new Set([
         canonicalTarget,
-        rasi,
+        targetRasiInput,
         ...targetAliases,
         ...targetAliases.map(a => a.charAt(0).toUpperCase() + a.slice(1))
       ]));
