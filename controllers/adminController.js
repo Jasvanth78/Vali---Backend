@@ -41,7 +41,7 @@ const updateAppContent = async (req, res) => {
 const sendPushNotificationToAll = async (title, body) => {
   try {
     // Check if Firebase Admin SDK is properly initialized
-    if (!admin || !admin.messaging) {
+    if (!admin || !admin.messaging || !admin.apps || admin.apps.length === 0) {
       console.error('Firebase Admin SDK not initialized. Cannot send notifications.');
       return;
     }
@@ -499,8 +499,8 @@ const manualSendNotification = async (req, res) => {
   const { title, body, target, rasi } = req.body;
   try {
     // Check if Firebase Admin SDK is properly initialized
-    if (!admin || !admin.messaging) {
-      return res.status(500).json({ error: 'Firebase Admin SDK not initialized. Check your service account configuration.' });
+    if (!admin || !admin.messaging || !admin.apps || admin.apps.length === 0) {
+      return res.status(400).json({ error: 'Firebase is not initialized on the server. Please set the FIREBASE_SERVICE_ACCOUNT environment variable in your server settings (Render / Dokploy).' });
     }
 
     const rasiMap = {
