@@ -19,9 +19,15 @@ try {
       } catch (_) {}
     }
     serviceAccount = JSON.parse(rawEnv);
+    if (serviceAccount && serviceAccount.private_key) {
+      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    }
     console.log('Firebase: Using credentials from environment variable.');
   } else {
     serviceAccount = require(path.resolve(__dirname, '..', serviceAccountPath));
+    if (serviceAccount && serviceAccount.private_key) {
+      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+    }
     console.log('Firebase: Using credentials from local JSON file.');
   }
 
