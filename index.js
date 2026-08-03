@@ -16,7 +16,7 @@ const { initSocket } = require('./utils/socket');
 initSocket(httpServer);
 
 const prisma = new PrismaClient();
-const PORT = process.env.PORT || 7005;
+const PORT = process.env.PORT || 7000;
 
 app.use(cors({
   origin: '*', // Allow all origins for dev
