@@ -10,12 +10,13 @@ const uploadRoutes = require('./routes/uploadRoutes');
 require('./utils/firebase');
 
 const app = express();
+app.set('trust proxy', true);
 const httpServer = require('http').createServer(app);
 const { initSocket } = require('./utils/socket');
 initSocket(httpServer);
 
 const prisma = new PrismaClient();
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 7005;
 
 app.use(cors({
   origin: '*', // Allow all origins for dev

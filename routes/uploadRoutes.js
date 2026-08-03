@@ -60,8 +60,9 @@ router.post('/', upload.single('image'), async (req, res) => {
 
       fs.writeFileSync(filepath, req.file.buffer);
 
-      const protocol = req.protocol || 'http';
-      const host = req.get('host') || `localhost:${process.env.PORT || 7000}`;
+      const rawProto = req.headers['x-forwarded-proto'] || req.protocol || 'http';
+      const host = req.get('host') || `localhost:${process.env.PORT || 7005}`;
+      const protocol = (!host.includes('localhost') && !host.includes('127.0.0.1')) ? 'https' : rawProto;
       const fileUrl = `${protocol}://${host}/uploads/${filename}`;
 
       console.log('✅ Uploaded to local disk:', fileUrl);
