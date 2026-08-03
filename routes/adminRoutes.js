@@ -7,6 +7,7 @@ const {
   deleteRasiPalan,
   getAllRasiPalan, 
   createPanchangam, 
+  updatePanchangam,
   deletePanchangam,
   getAllPanchangam, 
   createFestival, 
@@ -18,6 +19,7 @@ const {
   deleteMugurtham,
   getAllMugurtham,
   createNallaNeram,
+  updateNallaNeram,
   deleteNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,
@@ -76,6 +78,7 @@ router.get('/rasi-palan', getAllRasiPalan);
 
 // Panchangam
 router.post('/panchangam', createPanchangam);
+router.put('/panchangam/:id', updatePanchangam);
 router.delete('/panchangam/:id', deletePanchangam);
 router.get('/panchangam', getAllPanchangam);
 
@@ -93,6 +96,7 @@ router.get('/mugurtham', getAllMugurtham);
 
 // Nalla Neram
 router.post('/nalla-neram', createNallaNeram);
+router.put('/nalla-neram/:id', updateNallaNeram);
 router.delete('/nalla-neram/:id', deleteNallaNeram);
 router.get('/nalla-neram', getAllNallaNeram);
 

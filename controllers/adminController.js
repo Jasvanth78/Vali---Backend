@@ -250,10 +250,38 @@ const getAllRasiPalan = async (req, res) => {
 
 // Panchangam CRUD
 const createPanchangam = async (req, res) => {
-  const { date, sunrise, sunset, details } = req.body;
+  const { 
+    date, 
+    sunrise, 
+    sunset, 
+    tithi, 
+    nakshatram, 
+    yogam, 
+    karanam, 
+    details, 
+    nallaNeram, 
+    gowriNallaNeram, 
+    rahuKalam, 
+    yemagandam, 
+    kuligai 
+  } = req.body;
   try {
     const panchangam = await prisma.panchangam.create({
-      data: { date: new Date(date), sunrise, sunset, details },
+      data: {
+        date: new Date(date),
+        sunrise,
+        sunset,
+        tithi: tithi || null,
+        nakshatram: nakshatram || null,
+        yogam: yogam || null,
+        karanam: karanam || null,
+        details: details || '',
+        nallaNeram: nallaNeram || null,
+        gowriNallaNeram: gowriNallaNeram || null,
+        rahuKalam: rahuKalam || null,
+        yemagandam: yemagandam || null,
+        kuligai: kuligai || null,
+      },
     });
     emitLiveUpdate('panchangam_updated', panchangam);
     res.status(201).json(panchangam);
@@ -261,6 +289,50 @@ const createPanchangam = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+const updatePanchangam = async (req, res) => {
+  const { id } = req.params;
+  const { 
+    date, 
+    sunrise, 
+    sunset, 
+    tithi, 
+    nakshatram, 
+    yogam, 
+    karanam, 
+    details, 
+    nallaNeram, 
+    gowriNallaNeram, 
+    rahuKalam, 
+    yemagandam, 
+    kuligai 
+  } = req.body;
+  try {
+    const panchangam = await prisma.panchangam.update({
+      where: { id },
+      data: {
+        date: new Date(date),
+        sunrise,
+        sunset,
+        tithi: tithi || null,
+        nakshatram: nakshatram || null,
+        yogam: yogam || null,
+        karanam: karanam || null,
+        details: details || '',
+        nallaNeram: nallaNeram || null,
+        gowriNallaNeram: gowriNallaNeram || null,
+        rahuKalam: rahuKalam || null,
+        yemagandam: yemagandam || null,
+        kuligai: kuligai || null,
+      },
+    });
+    emitLiveUpdate('panchangam_updated', panchangam);
+    res.json(panchangam);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 const getAllPanchangam = async (req, res) => {
   try {
@@ -346,10 +418,19 @@ const getAllMugurtham = async (req, res) => {
 
 // Nalla Neram CRUD
 const createNallaNeram = async (req, res) => {
-  const { date, morning, evening } = req.body;
+  const { date, morning, evening, gowriMorning, gowriEvening, rahuKalam, yemagandam, kuligai } = req.body;
   try {
     const nallaNeram = await prisma.nallaNeram.create({
-      data: { date: new Date(date), morning, evening },
+      data: {
+        date: new Date(date),
+        morning,
+        evening,
+        gowriMorning: gowriMorning || null,
+        gowriEvening: gowriEvening || null,
+        rahuKalam: rahuKalam || null,
+        yemagandam: yemagandam || null,
+        kuligai: kuligai || null,
+      },
     });
     emitLiveUpdate('nalla_neram_updated', nallaNeram);
     res.status(201).json(nallaNeram);
@@ -357,6 +438,31 @@ const createNallaNeram = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+const updateNallaNeram = async (req, res) => {
+  const { id } = req.params;
+  const { date, morning, evening, gowriMorning, gowriEvening, rahuKalam, yemagandam, kuligai } = req.body;
+  try {
+    const nallaNeram = await prisma.nallaNeram.update({
+      where: { id },
+      data: {
+        date: new Date(date),
+        morning,
+        evening,
+        gowriMorning: gowriMorning || null,
+        gowriEvening: gowriEvening || null,
+        rahuKalam: rahuKalam || null,
+        yemagandam: yemagandam || null,
+        kuligai: kuligai || null,
+      },
+    });
+    emitLiveUpdate('nalla_neram_updated', nallaNeram);
+    res.json(nallaNeram);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 const bulkCreateRasiPalan = async (req, res) => {
   const { data } = req.body; // Expecting an array of objects
@@ -882,6 +988,7 @@ module.exports = {
   deleteRasiPalan,
   getAllRasiPalan, 
   createPanchangam, 
+  updatePanchangam,
   deletePanchangam,
   getAllPanchangam, 
   createFestival, 
@@ -893,6 +1000,7 @@ module.exports = {
   deleteMugurtham,
   getAllMugurtham,
   createNallaNeram,
+  updateNallaNeram,
   deleteNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,

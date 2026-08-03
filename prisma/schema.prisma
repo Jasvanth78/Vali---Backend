@@ -35,12 +35,22 @@ model RasiPalan {
 }
 
 model Panchangam {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  date      DateTime
-  sunrise   String
-  sunset    String
-  details   String
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  date            DateTime
+  sunrise         String
+  sunset          String
+  tithi           String?  // e.g., "வளர்பிறை பிரதமை / Shukla Prathamai"
+  nakshatram      String?  // e.g., "உத்திராடம் / Uttarashada"
+  yogam           String?  // e.g., "சுபம் / Subham"
+  karanam         String?  // e.g., "பவம் / Bavam"
+  details         String   // General astronomical details
+  nallaNeram      String?  // e.g., "09:15 AM - 10:15 AM | 04:45 PM - 05:45 PM"
+  gowriNallaNeram String?  // e.g., "10:30 AM - 11:30 AM"
+  rahuKalam       String?  // e.g., "01:30 PM - 03:00 PM"
+  yemagandam      String?  // e.g., "06:00 AM - 07:30 AM"
+  kuligai         String?  // e.g., "09:00 AM - 10:30 AM"
 }
+
 
 model Notification {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -65,11 +75,17 @@ model Festival {
 }
 
 model NallaNeram {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  date      DateTime
-  morning   String   // e.g., "09:00 - 10:30"
-  evening   String   // e.g., "16:30 - 18:00"
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  date         DateTime
+  morning      String   // e.g., "09:00 AM - 10:30 AM"
+  evening      String   // e.g., "04:30 PM - 06:00 PM"
+  gowriMorning String?  // e.g., "10:30 AM - 11:30 AM"
+  gowriEvening String?  // e.g., "06:30 PM - 07:30 PM"
+  rahuKalam    String?  // e.g., "01:30 PM - 03:00 PM"
+  yemagandam   String?  // e.g., "06:00 AM - 07:30 AM"
+  kuligai      String?  // e.g., "09:00 AM - 10:30 AM"
 }
+
 
 model Mugurtham {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
