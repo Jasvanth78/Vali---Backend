@@ -86,18 +86,26 @@ try {
 
   // 3. Try individual environment variables (FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY)
   if (!serviceAccount && process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
-    let privateKey = process.env.FIREBASE_PRIVATE_KEY.trim();
-    if ((privateKey.startsWith('"') && privateKey.endsWith('"')) || (privateKey.startsWith("'") && privateKey.endsWith("'"))) {
-      privateKey = privateKey.slice(1, -1);
+    function cleanEnvVal(val) {
+      if (!val) return '';
+      let str = val.trim();
+      if ((str.startsWith('"') && str.endsWith('"')) || (str.startsWith("'") && str.endsWith("'"))) {
+        str = str.slice(1, -1).trim();
+      }
+      return str;
     }
+
+    const projectId = cleanEnvVal(process.env.FIREBASE_PROJECT_ID);
+    const clientEmail = cleanEnvVal(process.env.FIREBASE_CLIENT_EMAIL);
+    let privateKey = cleanEnvVal(process.env.FIREBASE_PRIVATE_KEY);
     privateKey = privateKey.replace(/\\n/g, '\n');
 
     serviceAccount = {
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      projectId: projectId,
+      clientEmail: clientEmail,
       privateKey: privateKey,
-      project_id: process.env.FIREBASE_PROJECT_ID,
-      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      project_id: projectId,
+      client_email: clientEmail,
       private_key: privateKey,
     };
     console.log('Firebase: Using credentials from individual environment variables (FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, etc.).');
