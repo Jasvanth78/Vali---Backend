@@ -62,7 +62,8 @@ router.post('/', upload.single('image'), async (req, res) => {
 
       const rawProto = req.headers['x-forwarded-proto'] || req.protocol || 'http';
       const host = req.get('host') || `localhost:${process.env.PORT || 3000}`;
-      const protocol = (!host.includes('localhost') && !host.includes('127.0.0.1')) ? 'https' : rawProto;
+      const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
+      const protocol = isHttps ? 'https' : (rawProto === 'https' ? 'https' : 'http');
       const fileUrl = `${protocol}://${host}/uploads/${filename}`;
 
       console.log('✅ Uploaded to local disk:', fileUrl);

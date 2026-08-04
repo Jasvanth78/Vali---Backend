@@ -1,5 +1,6 @@
 const admin = require('firebase-admin');
 const path = require('path');
+const fs = require('fs');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -18,24 +19,44 @@ try {
         }
       } catch (_) {}
     }
-    serviceAccount = JSON.parse(rawEnv);
+    try {
+      serviceAccount = JSON.parse(rawEnv);
+      if (typeof serviceAccount === 'string') {
+        serviceAccount = JSON.parse(serviceAccount);
+      }
+    } catch (jsonErr) {
+      console.error('Firebase: Failed to parse FIREBASE_SERVICE_ACCOUNT JSON:', jsonErr.message);
+    }
     if (serviceAccount && serviceAccount.private_key) {
       serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
     }
-    console.log('Firebase: Using credentials from environment variable.');
-  } else {
-    serviceAccount = require(path.resolve(__dirname, '..', serviceAccountPath));
-    if (serviceAccount && serviceAccount.private_key) {
-      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
-    }
-    console.log('Firebase: Using credentials from local JSON file.');
+    console.log('Firebase: Using credentials from FIREBASE_SERVICE_ACCOUNT environment variable.');
   }
 
-  if (!admin.apps || admin.apps.length === 0) {
+  if (!serviceAccount) {
+    const resolvedPath = path.isAbsolute(serviceAccountPath)
+      ? serviceAccountPath
+      : path.resolve(__dirname, '..', serviceAccountPath);
+
+    if (fs.existsSync(resolvedPath)) {
+      const fileData = fs.readFileSync(resolvedPath, 'utf8');
+      serviceAccount = JSON.parse(fileData);
+      if (serviceAccount && serviceAccount.private_key) {
+        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+      }
+      console.log(`Firebase: Using credentials from local JSON file at ${resolvedPath}`);
+    } else {
+      console.warn(`Firebase Warning: Service account file not found at ${resolvedPath}`);
+    }
+  }
+
+  if (serviceAccount && (!admin.apps || admin.apps.length === 0)) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
     console.log('Firebase Admin SDK initialized successfully.');
+  } else if (!serviceAccount) {
+    console.warn('Firebase Admin SDK NOT initialized: No valid service account provided in env or JSON file.');
   }
 } catch (error) {
   console.error('Firebase Initialization Warning:', error.message);
@@ -43,4 +64,5 @@ try {
 }
 
 module.exports = admin;
+
 

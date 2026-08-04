@@ -61,6 +61,11 @@ const sendPushNotificationToAll = async (title, body) => {
 
     const message = {
       notification: { title, body },
+      data: {
+        title,
+        body,
+        click_action: 'FLUTTER_NOTIFICATION_CLICK',
+      },
       android: {
         priority: 'high',
         notification: {
@@ -88,13 +93,29 @@ const sendPushNotificationToAll = async (title, body) => {
     const response = await admin.messaging().sendEachForMulticast(message);
     console.log(`Push notification results: ${response.successCount} success, ${response.failureCount} failed.`);
 
-    // Log failed tokens for debugging
     if (response.failureCount > 0) {
+      const tokensToRemove = [];
       response.responses.forEach((resp, idx) => {
         if (!resp.success) {
-          console.error(`Failed to send to token ${idx}: ${resp.error?.message}`);
+          console.error(`Failed to send to token ${idx}: ${resp.error?.code} - ${resp.error?.message}`);
+          if (resp.error?.code === 'messaging/invalid-registration-token' ||
+              resp.error?.code === 'messaging/registration-token-not-registered') {
+            tokensToRemove.push(tokens[idx]);
+          }
         }
       });
+
+      if (tokensToRemove.length > 0) {
+        try {
+          await prisma.user.updateMany({
+            where: { fcmToken: { in: tokensToRemove } },
+            data: { fcmToken: null }
+          });
+          console.log(`Cleaned up ${tokensToRemove.length} unregistered FCM tokens from DB.`);
+        } catch (cleanErr) {
+          console.error('Error cleaning up invalid tokens:', cleanErr.message);
+        }
+      }
     }
   } catch (error) {
     console.error('Error sending push notifications:', error.message);
@@ -194,6 +215,12 @@ const sendPushNotificationToRasi = async (targetRasi, title, body) => {
 
     const message = {
       notification: { title, body },
+      data: {
+        title,
+        body,
+        click_action: 'FLUTTER_NOTIFICATION_CLICK',
+        target: canonicalTarget,
+      },
       android: {
         priority: 'high',
         notification: {
@@ -202,6 +229,9 @@ const sendPushNotificationToRasi = async (targetRasi, title, body) => {
           channelId: 'valikati_high_importance_channel_v2',
           priority: 'high',
           sound: 'default',
+          defaultSound: true,
+          defaultVibrateTimings: true,
+          visibility: 'public',
         },
       },
       apns: { payload: { aps: { sound: 'default', contentAvailable: true } } },
@@ -567,6 +597,12 @@ const manualSendNotification = async (req, res) => {
 
     const message = {
       notification: { title, body },
+      data: {
+        title,
+        body,
+        click_action: 'FLUTTER_NOTIFICATION_CLICK',
+        target: target === 'rasi' ? canonicalTarget : target,
+      },
       android: {
         priority: 'high',
         notification: {
@@ -594,13 +630,30 @@ const manualSendNotification = async (req, res) => {
     const response = await admin.messaging().sendEachForMulticast(message);
     console.log(`Manual notification results: ${response.successCount} success, ${response.failureCount} failed.`);
 
-    // Log individual failures for debugging
+    // Log individual failures and clean up unregistered tokens
     if (response.failureCount > 0) {
+      const tokensToRemove = [];
       response.responses.forEach((resp, idx) => {
         if (!resp.success) {
           console.error(`Failed to send to token ${idx}: ${resp.error?.code} - ${resp.error?.message}`);
+          if (resp.error?.code === 'messaging/invalid-registration-token' ||
+              resp.error?.code === 'messaging/registration-token-not-registered') {
+            tokensToRemove.push(tokens[idx]);
+          }
         }
       });
+
+      if (tokensToRemove.length > 0) {
+        try {
+          await prisma.user.updateMany({
+            where: { fcmToken: { in: tokensToRemove } },
+            data: { fcmToken: null }
+          });
+          console.log(`Cleaned up ${tokensToRemove.length} unregistered FCM tokens from DB.`);
+        } catch (cleanErr) {
+          console.error('Error cleaning up invalid tokens:', cleanErr.message);
+        }
+      }
     }
 
     res.json({ 
