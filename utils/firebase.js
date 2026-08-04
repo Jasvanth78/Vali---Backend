@@ -5,48 +5,92 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH || './firebase-service-account.json';
-let serviceAccount;
+function tryParseServiceAccount(rawInput) {
+  if (!rawInput || typeof rawInput !== 'string') return null;
+  let str = rawInput.trim();
+  if (str.length === 0) return null;
 
-try {
-  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    let rawEnv = process.env.FIREBASE_SERVICE_ACCOUNT.trim();
-    if (!rawEnv.startsWith('{')) {
-      try {
-        const decoded = Buffer.from(rawEnv, 'base64').toString('utf8');
-        if (decoded.trim().startsWith('{')) {
-          rawEnv = decoded.trim();
-        }
-      } catch (_) {}
-    }
+  // Try base64 decoding if it's base64 encoded
+  if (!str.startsWith('{')) {
     try {
-      serviceAccount = JSON.parse(rawEnv);
-      if (typeof serviceAccount === 'string') {
-        serviceAccount = JSON.parse(serviceAccount);
+      const decoded = Buffer.from(str, 'base64').toString('utf8').trim();
+      if (decoded.startsWith('{')) {
+        str = decoded;
       }
-    } catch (jsonErr) {
-      console.error('Firebase: Failed to parse FIREBASE_SERVICE_ACCOUNT JSON:', jsonErr.message);
-    }
-    if (serviceAccount && serviceAccount.private_key) {
-      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
-    }
-    console.log('Firebase: Using credentials from FIREBASE_SERVICE_ACCOUNT environment variable.');
+    } catch (_) {}
   }
 
-  if (!serviceAccount) {
-    const resolvedPath = path.isAbsolute(serviceAccountPath)
-      ? serviceAccountPath
-      : path.resolve(__dirname, '..', serviceAccountPath);
-
-    if (fs.existsSync(resolvedPath)) {
-      const fileData = fs.readFileSync(resolvedPath, 'utf8');
-      serviceAccount = JSON.parse(fileData);
-      if (serviceAccount && serviceAccount.private_key) {
-        serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+  // Try JSON parsing
+  if (str.startsWith('{')) {
+    try {
+      let parsed = JSON.parse(str);
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
       }
-      console.log(`Firebase: Using credentials from local JSON file at ${resolvedPath}`);
-    } else {
-      console.warn(`Firebase Warning: Service account file not found at ${resolvedPath}`);
+      if (parsed && typeof parsed === 'object' && (parsed.private_key || parsed.project_id || parsed.client_email)) {
+        if (parsed.private_key) {
+          parsed.private_key = parsed.private_key.replace(/\\n/g, '\n');
+        }
+        return parsed;
+      }
+    } catch (e) {
+      console.error('Firebase: Error parsing JSON credential string:', e.message);
+    }
+  }
+  return null;
+}
+
+let serviceAccount = null;
+
+try {
+  // 1. Try FIREBASE_SERVICE_ACCOUNT environment variable
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    serviceAccount = tryParseServiceAccount(process.env.FIREBASE_SERVICE_ACCOUNT);
+    if (serviceAccount) {
+      console.log('Firebase: Using credentials from FIREBASE_SERVICE_ACCOUNT environment variable.');
+    }
+  }
+
+  // 2. Try FIREBASE_SERVICE_ACCOUNT_PATH (in case JSON string was pasted directly into this variable)
+  if (!serviceAccount && process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
+    serviceAccount = tryParseServiceAccount(process.env.FIREBASE_SERVICE_ACCOUNT_PATH);
+    if (serviceAccount) {
+      console.log('Firebase: Detected JSON credential content directly inside FIREBASE_SERVICE_ACCOUNT_PATH.');
+    }
+  }
+
+  // 3. Try individual environment variables (FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY)
+  if (!serviceAccount && process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n');
+    serviceAccount = {
+      project_id: process.env.FIREBASE_PROJECT_ID,
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      private_key: privateKey,
+    };
+    console.log('Firebase: Using credentials from individual environment variables (FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, etc.).');
+  }
+
+  // 4. Fallback: Try loading from disk file path
+  if (!serviceAccount) {
+    const pathCandidate = process.env.FIREBASE_SERVICE_ACCOUNT_PATH || './firebase-service-account.json';
+    if (!pathCandidate.startsWith('{')) {
+      const resolvedPath = path.isAbsolute(pathCandidate)
+        ? pathCandidate
+        : path.resolve(__dirname, '..', pathCandidate);
+
+      if (fs.existsSync(resolvedPath)) {
+        try {
+          const fileData = fs.readFileSync(resolvedPath, 'utf8');
+          serviceAccount = tryParseServiceAccount(fileData);
+          if (serviceAccount) {
+            console.log(`Firebase: Using credentials from local JSON file at ${resolvedPath}`);
+          }
+        } catch (fileErr) {
+          console.error(`Firebase: Error reading file at ${resolvedPath}:`, fileErr.message);
+        }
+      } else {
+        console.warn(`Firebase Warning: Service account file not found at ${resolvedPath}`);
+      }
     }
   }
 
@@ -64,5 +108,6 @@ try {
 }
 
 module.exports = admin;
+
 
 
