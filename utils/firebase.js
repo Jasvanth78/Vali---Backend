@@ -10,7 +10,12 @@ function tryParseServiceAccount(rawInput) {
   let str = rawInput.trim();
   if (str.length === 0) return null;
 
-  // Try base64 decoding if it's base64 encoded
+  // 1. Strip outer wrapping quotes if present
+  if ((str.startsWith("'") && str.endsWith("'")) || (str.startsWith('"') && str.endsWith('"'))) {
+    str = str.slice(1, -1).trim();
+  }
+
+  // 2. Try Base64 decoding if string does not start with '{'
   if (!str.startsWith('{')) {
     try {
       const decoded = Buffer.from(str, 'base64').toString('utf8').trim();
@@ -20,7 +25,12 @@ function tryParseServiceAccount(rawInput) {
     } catch (_) {}
   }
 
-  // Try JSON parsing
+  // 3. Strip outer wrapping quotes again after base64 decode if needed
+  if ((str.startsWith("'") && str.endsWith("'")) || (str.startsWith('"') && str.endsWith('"'))) {
+    str = str.slice(1, -1).trim();
+  }
+
+  // 4. If str starts with '{', attempt JSON parsing
   if (str.startsWith('{')) {
     try {
       let parsed = JSON.parse(str);
@@ -34,6 +44,21 @@ function tryParseServiceAccount(rawInput) {
         return parsed;
       }
     } catch (e) {
+      // If parsing failed due to raw unescaped newlines in JSON string (e.g. pasted directly in env)
+      try {
+        const sanitized = str.replace(/\r?\n/g, '\\n');
+        let parsed = JSON.parse(sanitized);
+        if (typeof parsed === 'string') {
+          parsed = JSON.parse(parsed);
+        }
+        if (parsed && typeof parsed === 'object' && (parsed.private_key || parsed.project_id || parsed.client_email)) {
+          if (parsed.private_key) {
+            parsed.private_key = parsed.private_key.replace(/\\n/g, '\n');
+          }
+          return parsed;
+        }
+      } catch (_) {}
+
       console.error('Firebase: Error parsing JSON credential string:', e.message);
     }
   }
