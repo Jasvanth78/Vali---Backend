@@ -56,36 +56,36 @@ const getRasiPalan = async (req, res) => {
   const { rasi, type } = req.query; // type can be daily, weekly, monthly, yearly
 
   const rasiMap = {
-    'aries': 'Mesham',
-    'taurus': 'Rishabam',
-    'gemini': 'Midhunam',
-    'cancer': 'Kadagam',
-    'leo': 'Simmam',
-    'virgo': 'Kanni',
-    'libra': 'Thulaam',
-    'scorpio': 'Viruchigam',
-    'sagittarius': 'Dhanusu',
-    'capricorn': 'Magaram',
-    'aquarius': 'Kumbam',
-    'pisces': 'Meenam',
-    'mesham': 'Mesham',
-    'rishabam': 'Rishabam',
-    'midhunam': 'Midhunam',
-    'kadagam': 'Kadagam',
-    'simmam': 'Simmam',
-    'kanni': 'Kanni',
-    'thulaam': 'Thulaam',
-    'viruchigam': 'Viruchigam',
-    'dhanusu': 'Dhanusu',
-    'magaram': 'Magaram',
-    'kumbam': 'Kumbam',
-    'meenam': 'Meenam',
+    'aries': 'Mesham', 'taurus': 'Rishabam', 'gemini': 'Midhunam', 'cancer': 'Kadagam',
+    'leo': 'Simmam', 'virgo': 'Kanni', 'libra': 'Thulaam', 'scorpio': 'Viruchigam',
+    'sagittarius': 'Dhanusu', 'capricorn': 'Magaram', 'aquarius': 'Kumbam', 'pisces': 'Meenam',
+    'mesham': 'Mesham', 'rishabam': 'Rishabam', 'midhunam': 'Midhunam', 'kadagam': 'Kadagam',
+    'simmam': 'Simmam', 'kanni': 'Kanni', 'thulaam': 'Thulaam', 'viruchigam': 'Viruchigam',
+    'dhanusu': 'Dhanusu', 'magaram': 'Magaram', 'kumbam': 'Kumbam', 'meenam': 'Meenam',
   };
 
   try {
     const targetType = type || 'daily';
     const canonicalRasi = rasi ? (rasiMap[rasi.toLowerCase()] || rasi) : null;
-    const whereClause = canonicalRasi ? { rasi: canonicalRasi, type: targetType } : { type: targetType };
+    const whereClause = { type: targetType };
+
+    if (canonicalRasi) {
+      whereClause.rasi = canonicalRasi;
+    }
+
+    // Only return today's prediction for 'daily' type using Asia/Kolkata timezone
+    if (targetType === 'daily') {
+      const now = new Date();
+      // Use en-CA to get YYYY-MM-DD format directly
+      const dateStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(now);
+      const startOfDay = new Date(`${dateStr}T00:00:00.000Z`);
+      const endOfDay = new Date(`${dateStr}T23:59:59.999Z`);
+
+      whereClause.date = {
+        gte: startOfDay,
+        lte: endOfDay
+      };
+    }
 
     const palan = await prisma.rasiPalan.findFirst({
       where: whereClause,
@@ -221,10 +221,14 @@ const getUserNotifications = async (req, res) => {
 
   try {
     let userRasi = null;
+    let userCreatedAt = null;
     if (email && email !== 'all') {
       const user = await prisma.user.findUnique({ where: { email } });
-      if (user && user.rasi) {
-        userRasi = user.rasi.trim();
+      if (user) {
+        if (user.rasi) {
+          userRasi = user.rasi.trim();
+        }
+        userCreatedAt = user.createdAt;
       }
     }
     if (!userRasi && queryRasi && queryRasi.trim().length > 0) {
@@ -271,8 +275,13 @@ const getUserNotifications = async (req, res) => {
       });
     }
 
-    // Filter notifications based on target (all vs specific rasi)
+    // Filter notifications based on target (all vs specific rasi) and user creation date
     const filteredNotifications = notifications.filter(n => {
+      // Do not show notifications created before the user account
+      if (userCreatedAt && new Date(n.createdAt) < new Date(userCreatedAt)) {
+        return false;
+      }
+
       const targetRaw = (n.target || 'all').trim();
       const canonicalTarget = rasiMap[targetRaw.toLowerCase()] || targetRaw;
       if (canonicalTarget.toLowerCase() === 'all') return true;

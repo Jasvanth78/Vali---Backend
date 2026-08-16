@@ -51,7 +51,7 @@ const sendPushNotificationToAll = async (title, body) => {
       select: { fcmToken: true, email: true }
     });
 
-    const tokens = users.map(u => u.fcmToken).filter(t => t && t.length > 0);
+    const tokens = [...new Set(users.map(u => u.fcmToken).filter(t => t && t.length > 0))];
     if (tokens.length === 0) {
       console.log('No users with valid FCM tokens found. Skipping notification.');
       return;
@@ -197,7 +197,7 @@ const sendPushNotificationToRasi = async (targetRasi, title, body) => {
       select: { fcmToken: true }
     });
 
-    const tokens = users.map(u => u.fcmToken).filter(t => t && t.length > 0);
+    const tokens = [...new Set(users.map(u => u.fcmToken).filter(t => t && t.length > 0))];
 
     // Save notification to database targeting this specific rasi
     try {
@@ -497,20 +497,63 @@ const updateNallaNeram = async (req, res) => {
 const bulkCreateRasiPalan = async (req, res) => {
   const { data } = req.body; // Expecting an array of objects
   try {
-    const palans = await prisma.rasiPalan.createMany({
-      data: data.map(item => ({
-        ...item,
-        date: new Date(item.date)
-      }))
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return res.status(400).json({ error: 'No data provided for bulk upload' });
+    }
+
+    let processedCount = 0;
+
+    await prisma.$transaction(async (tx) => {
+      for (const item of data) {
+        const { rasi, type, content, date } = item;
+        
+        if (!rasi || !type || !content || !date) {
+          throw new Error(`Missing required fields for rasi: ${rasi || 'Unknown'}`);
+        }
+
+        const recordDate = new Date(date);
+        
+        const startOfDay = new Date(recordDate);
+        startOfDay.setUTCHours(0, 0, 0, 0);
+        
+        const endOfDay = new Date(recordDate);
+        endOfDay.setUTCHours(23, 59, 59, 999);
+
+        // Delete existing records for the same day, rasi, and type to prevent duplicates
+        await tx.rasiPalan.deleteMany({
+          where: {
+            rasi,
+            type,
+            date: {
+              gte: startOfDay,
+              lte: endOfDay
+            }
+          }
+        });
+
+        // Create the new record
+        await tx.rasiPalan.create({
+          data: {
+            rasi,
+            type,
+            content,
+            date: recordDate
+          }
+        });
+        processedCount++;
+      }
+    }, {
+      maxWait: 5000, // wait up to 5 seconds to get a connection
+      timeout: 30000 // 30 second timeout to complete the transaction
     });
 
     sendPushNotificationToAll(
       "Daily Updates",
       "Fresh Rasi Palan predictions have been uploaded for all signs!"
     );
-    emitLiveUpdate('rasi_palan_updated', { bulk: true, count: palans.count });
+    emitLiveUpdate('rasi_palan_updated', { bulk: true, count: processedCount });
 
-    res.status(201).json({ message: `Successfully added ${palans.count} records.`, count: palans.count });
+    res.status(201).json({ message: `Successfully processed ${processedCount} records.`, count: processedCount });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -573,7 +616,7 @@ const manualSendNotification = async (req, res) => {
       return res.status(400).json({ error: 'Invalid target or missing rasi' });
     }
 
-    const tokens = users.map(u => u.fcmToken).filter(t => t && t.length > 0);
+    const tokens = [...new Set(users.map(u => u.fcmToken).filter(t => t && t.length > 0))];
     if (tokens.length === 0) {
       return res.json({ message: 'No users found with valid tokens for this target.' });
     }

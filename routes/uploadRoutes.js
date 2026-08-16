@@ -45,7 +45,19 @@ router.post('/', upload.single('image'), async (req, res) => {
       }
     }
 
-    // Tier 2: Save to local uploads disk directory
+    // Tier 2: Fallback to Catbox public upload service (reliable direct image URL)
+    try {
+      const catboxUrl = await uploadToCatbox(req.file.buffer, req.file.originalname, req.file.mimetype);
+      console.log('✅ Uploaded to Catbox fallback:', catboxUrl);
+      return res.json({
+        url: catboxUrl,
+        provider: 'catbox',
+      });
+    } catch (catboxError) {
+      console.warn('⚠️ Catbox fallback failed, falling back to local disk:', catboxError.message || catboxError);
+    }
+
+    // Tier 3: Save to local uploads disk directory
     try {
       const path = require('path');
       const fs = require('fs');
@@ -73,19 +85,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         provider: 'local',
       });
     } catch (localError) {
-      console.warn('⚠️ Local disk upload failed, falling back to Catbox:', localError.message || localError);
-    }
-
-    // Tier 3: Fallback to Catbox public upload service (reliable direct image URL)
-    try {
-      const catboxUrl = await uploadToCatbox(req.file.buffer, req.file.originalname, req.file.mimetype);
-      console.log('✅ Uploaded to Catbox fallback:', catboxUrl);
-      return res.json({
-        url: catboxUrl,
-        provider: 'catbox',
-      });
-    } catch (catboxError) {
-      console.warn('⚠️ Catbox fallback failed, using Data URI fallback:', catboxError.message || catboxError);
+      console.warn('⚠️ Local disk upload failed, falling back to Data URI:', localError.message || localError);
     }
 
     // Tier 4: Convert buffer to base64 Data URI fallback
