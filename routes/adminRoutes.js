@@ -23,6 +23,10 @@ const {
   deleteNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,
+  bulkCreatePanchangam,
+  bulkCreateFestival,
+  bulkCreateMugurtham,
+  bulkCreateNallaNeram,
   getAllUsers,
   getAppContent,
   updateAppContent,
@@ -80,24 +84,28 @@ router.get('/rasi-palan', getAllRasiPalan);
 router.post('/panchangam', createPanchangam);
 router.put('/panchangam/:id', updatePanchangam);
 router.delete('/panchangam/:id', deletePanchangam);
+router.post('/panchangam/bulk', bulkCreatePanchangam);
 router.get('/panchangam', getAllPanchangam);
 
 // Festivals
 router.post('/festivals', createFestival);
 router.put('/festivals/:id', updateFestival);
 router.delete('/festivals/:id', deleteFestival);
+router.post('/festivals/bulk', bulkCreateFestival);
 router.get('/festivals', getAllFestivals);
 
 // Mugurtham
 router.post('/mugurtham', createMugurtham);
 router.put('/mugurtham/:id', updateMugurtham);
 router.delete('/mugurtham/:id', deleteMugurtham);
+router.post('/mugurtham/bulk', bulkCreateMugurtham);
 router.get('/mugurtham', getAllMugurtham);
 
 // Nalla Neram
 router.post('/nalla-neram', createNallaNeram);
 router.put('/nalla-neram/:id', updateNallaNeram);
 router.delete('/nalla-neram/:id', deleteNallaNeram);
+router.post('/nalla-neram/bulk', bulkCreateNallaNeram);
 router.get('/nalla-neram', getAllNallaNeram);
 
 // Users

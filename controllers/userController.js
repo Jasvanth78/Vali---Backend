@@ -73,18 +73,35 @@ const getRasiPalan = async (req, res) => {
       whereClause.rasi = canonicalRasi;
     }
 
-    // Only return today's prediction for 'daily' type using Asia/Kolkata timezone
-    if (targetType === 'daily') {
-      const now = new Date();
-      // Use en-CA to get YYYY-MM-DD format directly
-      const dateStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(now);
-      const startOfDay = new Date(`${dateStr}T00:00:00.000Z`);
-      const endOfDay = new Date(`${dateStr}T23:59:59.999Z`);
+    // Calculate date boundaries based on the target type using Asia/Kolkata timezone
+    const now = new Date();
+    const dateStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(now);
+    const localDate = new Date(`${dateStr}T00:00:00.000Z`);
 
-      whereClause.date = {
-        gte: startOfDay,
-        lte: endOfDay
-      };
+    if (targetType === 'daily') {
+      const startOfDay = new Date(localDate);
+      const endOfDay = new Date(localDate);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+      whereClause.date = { gte: startOfDay, lte: endOfDay };
+    } else if (targetType === 'weekly') {
+      const dayOfWeek = localDate.getUTCDay(); // 0 is Sunday, 1 is Monday
+      const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+      const startOfWeek = new Date(localDate);
+      startOfWeek.setUTCDate(localDate.getUTCDate() + diffToMonday);
+      
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setUTCDate(startOfWeek.getUTCDate() + 6);
+      endOfWeek.setUTCHours(23, 59, 59, 999);
+      
+      whereClause.date = { gte: startOfWeek, lte: endOfWeek };
+    } else if (targetType === 'monthly') {
+      const startOfMonth = new Date(Date.UTC(localDate.getUTCFullYear(), localDate.getUTCMonth(), 1));
+      const endOfMonth = new Date(Date.UTC(localDate.getUTCFullYear(), localDate.getUTCMonth() + 1, 0, 23, 59, 59, 999));
+      whereClause.date = { gte: startOfMonth, lte: endOfMonth };
+    } else if (targetType === 'yearly') {
+      const startOfYear = new Date(Date.UTC(localDate.getUTCFullYear(), 0, 1));
+      const endOfYear = new Date(Date.UTC(localDate.getUTCFullYear(), 11, 31, 23, 59, 59, 999));
+      whereClause.date = { gte: startOfYear, lte: endOfYear };
     }
 
     const palan = await prisma.rasiPalan.findFirst({
@@ -106,13 +123,31 @@ const getRasiPalan = async (req, res) => {
 
 const getDailyPanchangam = async (req, res) => {
   try {
+    const { date } = req.query;
+    if (date) {
+      const startOfDay = new Date(date);
+      startOfDay.setUTCHours(0, 0, 0, 0);
+      const endOfDay = new Date(date);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+      
+      const panchangam = await prisma.panchangam.findFirst({
+        where: {
+          date: {
+            gte: startOfDay,
+            lte: endOfDay
+          }
+        }
+      });
+      return res.json(panchangam || {});
+    }
+
     const panchangam = await prisma.panchangam.findFirst({
       orderBy: {
         date: 'desc'
       }
     });
 
-    res.json(panchangam || null);
+    res.json(panchangam || {});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -173,17 +208,87 @@ const getMugurtham = async (req, res) => {
 
 const getNallaNeram = async (req, res) => {
   try {
-    const nalla_neram = await prisma.nallaNeram.findFirst({
-      orderBy: {
-        date: 'desc'
-      }
-    });
+    const { upcoming, date } = req.query;
+    if (upcoming === 'true') {
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      const list = await prisma.nallaNeram.findMany({
+        where: { date: { gte: today } },
+        orderBy: { date: 'asc' },
+        take: 30
+      });
+      return res.json(list);
+    }
 
-    res.json(nalla_neram || null);
+    if (date) {
+      const startOfDay = new Date(date);
+      startOfDay.setUTCHours(0, 0, 0, 0);
+      const endOfDay = new Date(date);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+      
+      const nallaNeram = await prisma.nallaNeram.findFirst({
+        where: {
+          date: {
+            gte: startOfDay,
+            lte: endOfDay
+          }
+        }
+      });
+      return res.json(nallaNeram || {});
+    }
+
+    const nallaNeram = await prisma.nallaNeram.findFirst({
+      orderBy: { date: 'desc' }
+    });
+    res.json(nallaNeram);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+const getCalendarEvents = async (req, res) => {
+  try {
+    const { month } = req.query; // expected format 'YYYY-MM'
+    let startDate, endDate;
+    
+    if (month) {
+      const [yearStr, monthStr] = month.split('-');
+      startDate = new Date(Date.UTC(parseInt(yearStr), parseInt(monthStr) - 1, 1));
+      endDate = new Date(Date.UTC(parseInt(yearStr), parseInt(monthStr), 0, 23, 59, 59, 999));
+    } else {
+      const now = new Date();
+      startDate = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
+      endDate = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999));
+    }
+
+    const [panchangam, nallaNeram, festivals, mugurtham] = await Promise.all([
+      prisma.panchangam.findMany({ where: { date: { gte: startDate, lte: endDate } } }),
+      prisma.nallaNeram.findMany({ where: { date: { gte: startDate, lte: endDate } } }),
+      prisma.festival.findMany({ where: { date: { gte: startDate, lte: endDate } } }),
+      prisma.mugurtham.findMany({ where: { date: { gte: startDate, lte: endDate } } })
+    ]);
+
+    const grouped = {};
+    const addToGroup = (arr, key) => {
+      arr.forEach(item => {
+        const dateStr = item.date.toISOString().split('T')[0];
+        if (!grouped[dateStr]) grouped[dateStr] = {};
+        if (!grouped[dateStr][key]) grouped[dateStr][key] = [];
+        grouped[dateStr][key].push(item);
+      });
+    };
+
+    addToGroup(panchangam, 'panchangam');
+    addToGroup(nallaNeram, 'nallaNeram');
+    addToGroup(festivals, 'festivals');
+    addToGroup(mugurtham, 'mugurtham');
+
+    res.json(grouped);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 const updateUserProfile = async (req, res) => {
   const { originalEmail, name, email, rasi, star, dob, tob, pob } = req.body;
@@ -309,4 +414,4 @@ const deleteUserAccount = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount };
+module.exports = { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount, getCalendarEvents };

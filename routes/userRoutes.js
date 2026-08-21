@@ -1,5 +1,5 @@
 const express = require('express');
-const { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount } = require('../controllers/userController');
+const { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount, getCalendarEvents } = require('../controllers/userController');
 const { getAppContent, getAppCards, getAllBlogs, getAllEvents } = require('../controllers/adminController');
 
 const router = express.Router();
@@ -14,6 +14,7 @@ router.get('/panchangam', getDailyPanchangam);
 router.get('/festivals', getFestivals);
 router.get('/mugurtham', getMugurtham);
 router.get('/nalla-neram', getNallaNeram);
+router.get('/calendar', getCalendarEvents);
 router.post('/ai-chat', askAIJothidar);
 router.get('/app-content', getAppContent);
 router.get('/app-cards', getAppCards);

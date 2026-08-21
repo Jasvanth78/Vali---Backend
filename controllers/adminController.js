@@ -559,6 +559,135 @@ const bulkCreateRasiPalan = async (req, res) => {
   }
 };
 
+
+
+const bulkCreatePanchangam = async (req, res) => {
+  const { data } = req.body;
+  try {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return res.status(400).json({ error: 'No data provided for bulk upload' });
+    }
+
+    let processedCount = 0;
+
+    await prisma.$transaction(async (tx) => {
+      for (const item of data) {
+        const { date, sunrise, sunset, tithi, nakshatram, yogam, karanam, details, nallaNeram, gowriNallaNeram, rahuKalam, yemagandam, kuligai } = item;
+        const recordDate = new Date(date);
+        const startOfDay = new Date(recordDate); startOfDay.setUTCHours(0, 0, 0, 0);
+        const endOfDay = new Date(recordDate); endOfDay.setUTCHours(23, 59, 59, 999);
+
+        await tx.panchangam.deleteMany({ where: { date: { gte: startOfDay, lte: endOfDay } } });
+
+        await tx.panchangam.create({
+          data: {
+            date: recordDate, sunrise, sunset, tithi: tithi || null, nakshatram: nakshatram || null, yogam: yogam || null, karanam: karanam || null, details: details || '', nallaNeram: nallaNeram || null, gowriNallaNeram: gowriNallaNeram || null, rahuKalam: rahuKalam || null, yemagandam: yemagandam || null, kuligai: kuligai || null
+          }
+        });
+        processedCount++;
+      }
+    });
+
+    emitLiveUpdate('panchangam_updated', { bulk: true, count: processedCount });
+    res.status(201).json({ message: `Successfully processed ${processedCount} records.`, count: processedCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const bulkCreateFestival = async (req, res) => {
+  const { data } = req.body;
+  try {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return res.status(400).json({ error: 'No data provided for bulk upload' });
+    }
+    let processedCount = 0;
+    await prisma.$transaction(async (tx) => {
+      for (const item of data) {
+        const { name, date, description, imageUrl } = item;
+        const recordDate = new Date(date);
+        const startOfDay = new Date(recordDate); startOfDay.setUTCHours(0, 0, 0, 0);
+        const endOfDay = new Date(recordDate); endOfDay.setUTCHours(23, 59, 59, 999);
+
+        // Optional: delete existing festival with same name on same date
+        await tx.festival.deleteMany({ where: { date: { gte: startOfDay, lte: endOfDay }, name } });
+
+        await tx.festival.create({
+          data: { name, date: recordDate, description: description || null, imageUrl: imageUrl || null }
+        });
+        processedCount++;
+      }
+    });
+
+    emitLiveUpdate('festivals_updated', { bulk: true, count: processedCount });
+    res.status(201).json({ message: `Successfully processed ${processedCount} records.`, count: processedCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const bulkCreateMugurtham = async (req, res) => {
+  const { data } = req.body;
+  try {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return res.status(400).json({ error: 'No data provided for bulk upload' });
+    }
+    let processedCount = 0;
+    await prisma.$transaction(async (tx) => {
+      for (const item of data) {
+        const { date, time, type, description } = item;
+        const recordDate = new Date(date);
+        const startOfDay = new Date(recordDate); startOfDay.setUTCHours(0, 0, 0, 0);
+        const endOfDay = new Date(recordDate); endOfDay.setUTCHours(23, 59, 59, 999);
+
+        await tx.mugurtham.deleteMany({ where: { date: { gte: startOfDay, lte: endOfDay } } });
+
+        await tx.mugurtham.create({
+          data: { date: recordDate, time, type, description: description || null }
+        });
+        processedCount++;
+      }
+    });
+
+    emitLiveUpdate('mugurtham_updated', { bulk: true, count: processedCount });
+    res.status(201).json({ message: `Successfully processed ${processedCount} records.`, count: processedCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const bulkCreateNallaNeram = async (req, res) => {
+  const { data } = req.body;
+  try {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return res.status(400).json({ error: 'No data provided for bulk upload' });
+    }
+    let processedCount = 0;
+    await prisma.$transaction(async (tx) => {
+      for (const item of data) {
+        const { date, morning, evening, gowriMorning, gowriEvening, rahuKalam, yemagandam, kuligai } = item;
+        const recordDate = new Date(date);
+        const startOfDay = new Date(recordDate); startOfDay.setUTCHours(0, 0, 0, 0);
+        const endOfDay = new Date(recordDate); endOfDay.setUTCHours(23, 59, 59, 999);
+
+        await tx.nallaNeram.deleteMany({ where: { date: { gte: startOfDay, lte: endOfDay } } });
+
+        await tx.nallaNeram.create({
+          data: {
+            date: recordDate, morning, evening, gowriMorning: gowriMorning || null, gowriEvening: gowriEvening || null, rahuKalam: rahuKalam || null, yemagandam: yemagandam || null, kuligai: kuligai || null
+          }
+        });
+        processedCount++;
+      }
+    });
+
+    emitLiveUpdate('nalla_neram_updated', { bulk: true, count: processedCount });
+    res.status(201).json({ message: `Successfully processed ${processedCount} records.`, count: processedCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getAllNallaNeram = async (req, res) => {
   try {
     const list = await prisma.nallaNeram.findMany();
@@ -1100,6 +1229,10 @@ module.exports = {
   deleteNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,
+  bulkCreatePanchangam,
+  bulkCreateFestival,
+  bulkCreateMugurtham,
+  bulkCreateNallaNeram,
   getAllUsers,
   getAppContent,
   updateAppContent,
