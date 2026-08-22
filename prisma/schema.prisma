@@ -124,6 +124,7 @@ model Blog {
   contentEn  String?
   author     String?  @default("Valikatti Team")
   imageUrl   String?
+  audioUrl   String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

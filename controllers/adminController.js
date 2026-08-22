@@ -1000,7 +1000,7 @@ const getAllBlogs = async (req, res) => {
 };
 
 const createBlog = async (req, res) => {
-  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, imageUrl, image, sendNotification } = req.body;
+  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, imageUrl, image, sendNotification, audioUrl } = req.body;
   try {
     const finalImage = imageUrl || image || null;
     const blogTitle = titleTa || titleEn || 'புதிய பதிவு';
@@ -1014,7 +1014,8 @@ const createBlog = async (req, res) => {
         contentTa,
         contentEn: contentEn || null,
         author: author || 'Valikatti Team',
-        imageUrl: finalImage
+        imageUrl: finalImage,
+        audioUrl: audioUrl || null
       }
     });
 
@@ -1052,7 +1053,7 @@ const createBlog = async (req, res) => {
 
 const updateBlog = async (req, res) => {
   const { id } = req.params;
-  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, imageUrl } = req.body;
+  const { titleTa, titleEn, categoryTa, categoryEn, contentTa, contentEn, author, imageUrl, audioUrl } = req.body;
   try {
     const blog = await prisma.blog.update({
       where: { id },
@@ -1064,7 +1065,8 @@ const updateBlog = async (req, res) => {
         contentTa,
         contentEn: contentEn || null,
         author,
-        imageUrl: imageUrl || null
+        imageUrl: imageUrl || null,
+        audioUrl: audioUrl || null
       }
     });
     emitLiveUpdate('blog_updated', blog);
