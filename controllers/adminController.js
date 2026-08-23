@@ -586,6 +586,9 @@ const bulkCreatePanchangam = async (req, res) => {
         });
         processedCount++;
       }
+    }, {
+      maxWait: 10000,
+      timeout: 60000
     });
 
     emitLiveUpdate('panchangam_updated', { bulk: true, count: processedCount });
@@ -617,6 +620,9 @@ const bulkCreateFestival = async (req, res) => {
         });
         processedCount++;
       }
+    }, {
+      maxWait: 10000,
+      timeout: 60000
     });
 
     emitLiveUpdate('festivals_updated', { bulk: true, count: processedCount });
@@ -647,6 +653,9 @@ const bulkCreateMugurtham = async (req, res) => {
         });
         processedCount++;
       }
+    }, {
+      maxWait: 10000,
+      timeout: 60000
     });
 
     emitLiveUpdate('mugurtham_updated', { bulk: true, count: processedCount });
@@ -679,6 +688,9 @@ const bulkCreateNallaNeram = async (req, res) => {
         });
         processedCount++;
       }
+    }, {
+      maxWait: 10000,
+      timeout: 60000
     });
 
     emitLiveUpdate('nalla_neram_updated', { bulk: true, count: processedCount });
