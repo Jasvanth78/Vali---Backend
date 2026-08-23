@@ -4,22 +4,27 @@ const {
   getDashboardStats, 
   createRasiPalan, 
   updateRasiPalan,
+  deleteAllRasiPalan,
   deleteRasiPalan,
   getAllRasiPalan, 
   createPanchangam, 
   updatePanchangam,
+  deleteAllPanchangam,
   deletePanchangam,
   getAllPanchangam, 
   createFestival, 
   updateFestival,
+  deleteAllFestival,
   deleteFestival,
   getAllFestivals, 
   createMugurtham,
   updateMugurtham,
+  deleteAllMugurtham,
   deleteMugurtham,
   getAllMugurtham,
   createNallaNeram,
   updateNallaNeram,
+  deleteAllNallaNeram,
   deleteNallaNeram,
   getAllNallaNeram,
   bulkCreateRasiPalan,
@@ -37,10 +42,12 @@ const {
   createBlog,
   getAllBlogs,
   updateBlog,
+  deleteAllBlogs,
   deleteBlog,
   getAllEvents,
   createEvent,
   updateEvent,
+  deleteAllEvents,
   deleteEvent
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
@@ -55,12 +62,14 @@ router.post('/send-notification', manualSendNotification);
 router.get('/blogs', getAllBlogs);
 router.post('/blogs', createBlog);
 router.put('/blogs/:id', updateBlog);
+router.delete('/blogs/all', deleteAllBlogs);
 router.delete('/blogs/:id', deleteBlog);
 
 // Events
 router.get('/events', getAllEvents);
 router.post('/events', createEvent);
 router.put('/events/:id', updateEvent);
+router.delete('/events/all', deleteAllEvents);
 router.delete('/events/:id', deleteEvent);
 
 // App Content
@@ -76,6 +85,7 @@ router.delete('/app-cards/:id', deleteAppCard);
 // Rasi Palan
 router.post('/rasi-palan', createRasiPalan);
 router.put('/rasi-palan/:id', updateRasiPalan);
+router.delete('/rasi-palan/all', deleteAllRasiPalan);
 router.delete('/rasi-palan/:id', deleteRasiPalan);
 router.post('/rasi-palan/bulk', bulkCreateRasiPalan);
 router.get('/rasi-palan', getAllRasiPalan);
@@ -83,6 +93,7 @@ router.get('/rasi-palan', getAllRasiPalan);
 // Panchangam
 router.post('/panchangam', createPanchangam);
 router.put('/panchangam/:id', updatePanchangam);
+router.delete('/panchangam/all', deleteAllPanchangam);
 router.delete('/panchangam/:id', deletePanchangam);
 router.post('/panchangam/bulk', bulkCreatePanchangam);
 router.get('/panchangam', getAllPanchangam);
@@ -90,6 +101,7 @@ router.get('/panchangam', getAllPanchangam);
 // Festivals
 router.post('/festivals', createFestival);
 router.put('/festivals/:id', updateFestival);
+router.delete('/festivals/all', deleteAllFestival);
 router.delete('/festivals/:id', deleteFestival);
 router.post('/festivals/bulk', bulkCreateFestival);
 router.get('/festivals', getAllFestivals);
@@ -97,6 +109,7 @@ router.get('/festivals', getAllFestivals);
 // Mugurtham
 router.post('/mugurtham', createMugurtham);
 router.put('/mugurtham/:id', updateMugurtham);
+router.delete('/mugurtham/all', deleteAllMugurtham);
 router.delete('/mugurtham/:id', deleteMugurtham);
 router.post('/mugurtham/bulk', bulkCreateMugurtham);
 router.get('/mugurtham', getAllMugurtham);
@@ -104,6 +117,7 @@ router.get('/mugurtham', getAllMugurtham);
 // Nalla Neram
 router.post('/nalla-neram', createNallaNeram);
 router.put('/nalla-neram/:id', updateNallaNeram);
+router.delete('/nalla-neram/all', deleteAllNallaNeram);
 router.delete('/nalla-neram/:id', deleteNallaNeram);
 router.post('/nalla-neram/bulk', bulkCreateNallaNeram);
 router.get('/nalla-neram', getAllNallaNeram);

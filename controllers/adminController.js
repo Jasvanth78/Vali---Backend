@@ -1219,7 +1219,23 @@ const sendDailyMorningNotification = async () => {
   }
 };
 
-module.exports = { 
+
+const deleteAllRasiPalan = async (req, res) => { try { await prisma.rasiPalan.deleteMany({}); res.json({ message: 'All Rasi Palan records deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const deleteAllPanchangam = async (req, res) => { try { await prisma.panchangam.deleteMany({}); res.json({ message: 'All Panchangam records deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const deleteAllNallaNeram = async (req, res) => { try { await prisma.nallaNeram.deleteMany({}); res.json({ message: 'All Nalla Neram records deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const deleteAllFestival = async (req, res) => { try { await prisma.festival.deleteMany({}); res.json({ message: 'All Festival records deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const deleteAllMugurtham = async (req, res) => { try { await prisma.mugurtham.deleteMany({}); res.json({ message: 'All Mugurtham records deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const deleteAllBlogs = async (req, res) => { try { await prisma.blog.deleteMany({}); res.json({ message: 'All Blogs deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const deleteAllEvents = async (req, res) => { try { await prisma.event.deleteMany({}); res.json({ message: 'All Events deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+
+module.exports = {
+  deleteAllRasiPalan,
+  deleteAllPanchangam,
+  deleteAllNallaNeram,
+  deleteAllFestival,
+  deleteAllMugurtham,
+  deleteAllBlogs,
+  deleteAllEvents, 
   adminLogin, 
   getDashboardStats, 
   createRasiPalan, 
