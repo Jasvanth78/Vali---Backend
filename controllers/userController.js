@@ -3,6 +3,7 @@ const OpenAI = require('openai');
 const prisma = new PrismaClient();
 const fs = require('fs');
 const path = require('path');
+const { sendThankYouEmail, sendAdminNotification, sendAccountDeletionEmail } = require('../utils/mailer');
 const logFile = path.join(__dirname, '../server-debug.log');
 
 const loginUser = async (req, res) => {
@@ -407,6 +408,11 @@ const deleteUserAccount = async (req, res) => {
     const user = await prisma.user.delete({
       where: { email },
     });
+
+    const admins = await prisma.admin.findMany();
+    const adminEmails = admins.map(admin => admin.email);
+    sendAccountDeletionEmail(email, adminEmails);
+
     res.json({ message: 'User deleted successfully', user });
   } catch (error) {
     fs.appendFileSync(logFile, `Delete User Error: ${error.message}\n${error.stack}\n`);
@@ -414,4 +420,27 @@ const deleteUserAccount = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount, getCalendarEvents };
+const submitContactMessage = async (req, res) => {
+  const { name, email, content } = req.body;
+  if (!name || !email || !content) {
+    return res.status(400).json({ error: 'Name, email, and content are required' });
+  }
+
+  try {
+    const message = await prisma.contactMessage.create({
+      data: { name, email, content },
+    });
+
+    const admins = await prisma.admin.findMany();
+    const adminEmails = admins.map(admin => admin.email);
+    sendThankYouEmail(email, name);
+    sendAdminNotification(adminEmails, message);
+
+    res.json({ message: 'Message submitted successfully', data: message });
+  } catch (error) {
+    fs.appendFileSync(logFile, `Contact Message Error: ${error.message}\n${error.stack}\n`);
+    res.status(500).json({ error: 'Failed to submit message' });
+  }
+};
+
+module.exports = { loginUser, getUserProfile, updateUserProfile, selectRasi, getRasiPalan, getDailyPanchangam, getFestivals, getMugurtham, getNallaNeram, askAIJothidar, getUserNotifications, deleteUserAccount, getCalendarEvents, submitContactMessage };

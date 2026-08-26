@@ -144,3 +144,11 @@ model Event {
   updatedAt     DateTime @updatedAt
 }
 
+model ContactMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  content   String
+  createdAt DateTime @default(now())
+}
+

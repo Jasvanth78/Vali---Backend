@@ -48,7 +48,10 @@ const {
   createEvent,
   updateEvent,
   deleteAllEvents,
-  deleteEvent
+  deleteEvent,
+  getAdmins,
+  createAdmin,
+  deleteAdmin
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
 
@@ -57,6 +60,10 @@ const router = express.Router();
 router.post('/login', adminLogin);
 router.get('/dashboard', getDashboardStats);
 router.post('/send-notification', manualSendNotification);
+
+router.get('/admins', getAdmins);
+router.post('/admins', createAdmin);
+router.delete('/admins/:id', deleteAdmin);
 
 // Blogs
 router.get('/blogs', getAllBlogs);

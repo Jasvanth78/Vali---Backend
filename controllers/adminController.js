@@ -1227,6 +1227,42 @@ const deleteAllFestival = async (req, res) => { try { await prisma.festival.dele
 const deleteAllMugurtham = async (req, res) => { try { await prisma.mugurtham.deleteMany({}); res.json({ message: 'All Mugurtham records deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
 const deleteAllBlogs = async (req, res) => { try { await prisma.blog.deleteMany({}); res.json({ message: 'All Blogs deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
 const deleteAllEvents = async (req, res) => { try { await prisma.event.deleteMany({}); res.json({ message: 'All Events deleted successfully' }); } catch (error) { res.status(500).json({ error: error.message }); } };
+const getAdmins = async (req, res) => {
+  try {
+    const admins = await prisma.admin.findMany({
+      select: { id: true, email: true },
+    });
+    res.json(admins);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createAdmin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = await prisma.admin.create({
+      data: { email, password: hashedPassword },
+    });
+    res.status(201).json({ message: 'Admin created successfully', id: newAdmin.id, email: newAdmin.email });
+  } catch (error) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteAdmin = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.admin.delete({ where: { id } });
+    res.json({ message: 'Admin deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
   deleteAllRasiPalan,
@@ -1279,7 +1315,8 @@ module.exports = {
   updateEvent,
   deleteEvent,
   sendPushNotificationToAll,
-  sendDailyMorningNotification
+  sendDailyMorningNotification,
+  getAdmins,
+  createAdmin,
+  deleteAdmin
 };
-
-
