@@ -152,3 +152,25 @@ model ContactMessage {
   createdAt DateTime @default(now())
 }
 
+model VastuSasthiram {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  titleTa    String
+  titleEn    String?
+  contentTa  String
+  contentEn  String?
+  imageUrl   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Sakunam {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  category   String   // 'kagam', 'palli_sollum', 'palli_vilum', 'aanthai'
+  titleTa    String
+  titleEn    String?
+  contentTa  String
+  contentEn  String?
+  imageUrl   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

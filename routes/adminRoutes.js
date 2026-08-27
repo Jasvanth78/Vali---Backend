@@ -51,7 +51,17 @@ const {
   deleteEvent,
   getAdmins,
   createAdmin,
-  deleteAdmin
+  deleteAdmin,
+  getAllVastuSasthiram,
+  createVastuSasthiram,
+  updateVastuSasthiram,
+  deleteVastuSasthiram,
+  deleteAllVastuSasthiram,
+  getAllSakunam,
+  createSakunam,
+  updateSakunam,
+  deleteSakunam,
+  deleteAllSakunam
 } = require('../controllers/adminController');
 const { protect } = require('../utils/auth');
 
@@ -78,6 +88,20 @@ router.post('/events', createEvent);
 router.put('/events/:id', updateEvent);
 router.delete('/events/all', deleteAllEvents);
 router.delete('/events/:id', deleteEvent);
+
+// Vastu Sasthiram
+router.get('/vastu', getAllVastuSasthiram);
+router.post('/vastu', createVastuSasthiram);
+router.put('/vastu/:id', updateVastuSasthiram);
+router.delete('/vastu/all', deleteAllVastuSasthiram);
+router.delete('/vastu/:id', deleteVastuSasthiram);
+
+// Sakunam
+router.get('/sakunam', getAllSakunam);
+router.post('/sakunam', createSakunam);
+router.put('/sakunam/:id', updateSakunam);
+router.delete('/sakunam/all', deleteAllSakunam);
+router.delete('/sakunam/:id', deleteSakunam);
 
 // App Content
 router.get('/app-content', getAppContent);

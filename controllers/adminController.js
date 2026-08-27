@@ -546,11 +546,15 @@ const bulkCreateRasiPalan = async (req, res) => {
       maxWait: 5000, // wait up to 5 seconds to get a connection
       timeout: 30000 // 30 second timeout to complete the transaction
     });
-
-    sendPushNotificationToAll(
-      "Daily Updates",
-      "Fresh Rasi Palan predictions have been uploaded for all signs!"
-    );
+    const uniqueRasis = [...new Set(data.map(item => item.rasi).filter(Boolean))];
+    for (const rasi of uniqueRasis) {
+      sendPushNotificationToRasi(
+        rasi,
+        "தினசரி ராசி பலன் 🌅",
+        `உங்கள் ${rasi} ராசிக்கான பலன்கள் வெளியிடப்பட்டுள்ளன!`
+      );
+    }
+    
     emitLiveUpdate('rasi_palan_updated', { bulk: true, count: processedCount });
 
     res.status(201).json({ message: `Successfully processed ${processedCount} records.`, count: processedCount });
@@ -1099,6 +1103,154 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+// --- VASTU SASTHIRAM CONTROLLERS ---
+const getAllVastuSasthiram = async (req, res) => {
+  try {
+    const vastuList = await prisma.vastuSasthiram.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(vastuList);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createVastuSasthiram = async (req, res) => {
+  const { titleTa, titleEn, contentTa, contentEn, imageUrl } = req.body;
+  try {
+    const vastu = await prisma.vastuSasthiram.create({
+      data: {
+        titleTa,
+        titleEn: titleEn || null,
+        contentTa,
+        contentEn: contentEn || null,
+        imageUrl: imageUrl || null
+      }
+    });
+    emitLiveUpdate('vastu_created', vastu);
+    res.status(201).json({ message: 'Vastu article created successfully', vastu });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateVastuSasthiram = async (req, res) => {
+  const { id } = req.params;
+  const { titleTa, titleEn, contentTa, contentEn, imageUrl } = req.body;
+  try {
+    const vastu = await prisma.vastuSasthiram.update({
+      where: { id },
+      data: {
+        titleTa,
+        titleEn: titleEn || null,
+        contentTa,
+        contentEn: contentEn || null,
+        imageUrl: imageUrl || null
+      }
+    });
+    emitLiveUpdate('vastu_updated', vastu);
+    res.json({ message: 'Vastu article updated successfully', vastu });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteVastuSasthiram = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.vastuSasthiram.delete({ where: { id } });
+    emitLiveUpdate('vastu_deleted', { id });
+    res.json({ message: 'Vastu article deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteAllVastuSasthiram = async (req, res) => {
+  try {
+    await prisma.vastuSasthiram.deleteMany({});
+    emitLiveUpdate('vastu_deleted_all', {});
+    res.json({ message: 'All Vastu articles deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// --- SAKUNAM CONTROLLERS ---
+const getAllSakunam = async (req, res) => {
+  try {
+    const sakunamList = await prisma.sakunam.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(sakunamList);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createSakunam = async (req, res) => {
+  const { category, titleTa, titleEn, contentTa, contentEn, imageUrl } = req.body;
+  try {
+    const sakunam = await prisma.sakunam.create({
+      data: {
+        category,
+        titleTa,
+        titleEn: titleEn || null,
+        contentTa,
+        contentEn: contentEn || null,
+        imageUrl: imageUrl || null
+      }
+    });
+    emitLiveUpdate('sakunam_created', sakunam);
+    res.status(201).json({ message: 'Sakunam entry created successfully', sakunam });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateSakunam = async (req, res) => {
+  const { id } = req.params;
+  const { category, titleTa, titleEn, contentTa, contentEn, imageUrl } = req.body;
+  try {
+    const sakunam = await prisma.sakunam.update({
+      where: { id },
+      data: {
+        category,
+        titleTa,
+        titleEn: titleEn || null,
+        contentTa,
+        contentEn: contentEn || null,
+        imageUrl: imageUrl || null
+      }
+    });
+    emitLiveUpdate('sakunam_updated', sakunam);
+    res.json({ message: 'Sakunam entry updated successfully', sakunam });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteSakunam = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.sakunam.delete({ where: { id } });
+    emitLiveUpdate('sakunam_deleted', { id });
+    res.json({ message: 'Sakunam entry deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteAllSakunam = async (req, res) => {
+  try {
+    await prisma.sakunam.deleteMany({});
+    emitLiveUpdate('sakunam_deleted_all', {});
+    res.json({ message: 'All Sakunam entries deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // --- EVENT CONTROLLERS ---
 const getAllEvents = async (req, res) => {
   try {
@@ -1318,5 +1470,15 @@ module.exports = {
   sendDailyMorningNotification,
   getAdmins,
   createAdmin,
-  deleteAdmin
+  deleteAdmin,
+  getAllVastuSasthiram,
+  createVastuSasthiram,
+  updateVastuSasthiram,
+  deleteVastuSasthiram,
+  deleteAllVastuSasthiram,
+  getAllSakunam,
+  createSakunam,
+  updateSakunam,
+  deleteSakunam,
+  deleteAllSakunam
 };
