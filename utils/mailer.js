@@ -24,7 +24,7 @@ const sendThankYouEmail = async (userEmail, userName) => {
       text: `Hi ${userName},\n\nThank you for reaching out to us. We have received your message and will get back to you shortly.\n\nBest Regards,\nValikatti Team`,
     });
   } catch (error) {
-    if (fs.existsSync(logFile)) fs.appendFileSync(logFile, `Mailer Error (Thank You): ${error.message}\n${error.stack}\n`);
+    console.error(`Mailer Error (Thank You): ${error.message}\n${error.stack}`);
   }
 };
 
@@ -38,7 +38,7 @@ const sendAdminNotification = async (adminEmails, contactMessage) => {
       text: `A new message has been submitted via the Contact Us form:\n\nName: ${contactMessage.name}\nEmail: ${contactMessage.email}\nMessage: ${contactMessage.content}\n\nPlease reply to the user if necessary.`,
     });
   } catch (error) {
-    if (fs.existsSync(logFile)) fs.appendFileSync(logFile, `Mailer Error (Admin Notification): ${error.message}\n${error.stack}\n`);
+    console.error(`Mailer Error (Admin Notification): ${error.message}\n${error.stack}`);
   }
 };
 
@@ -64,12 +64,27 @@ const sendAccountDeletionEmail = async (userEmail, adminEmails) => {
       });
     }
   } catch (error) {
-    if (fs.existsSync(logFile)) fs.appendFileSync(logFile, `Mailer Error (Account Deletion): ${error.message}\n${error.stack}\n`);
+    console.error(`Mailer Error (Account Deletion): ${error.message}\n${error.stack}`);
+  }
+};
+
+const sendWelcomeEmail = async (userEmail, userName) => {
+  try {
+    if (!process.env.SMTP_USER) return;
+    await transporter.sendMail({
+      from: `"Valikatti Support" <${process.env.SMTP_USER}>`,
+      to: userEmail,
+      subject: 'Welcome to Valikatti! ✨',
+      text: `Hello ${userName},\n\nWe're thrilled to have you join Valikatti. Your personal astrology journey starts here!\n\nBest Regards,\nThe Valikatti Team`,
+    });
+  } catch (error) {
+    console.error(`Mailer Error (Welcome): ${error.message}\n${error.stack}`);
   }
 };
 
 module.exports = {
   sendThankYouEmail,
   sendAdminNotification,
-  sendAccountDeletionEmail
+  sendAccountDeletionEmail,
+  sendWelcomeEmail
 };

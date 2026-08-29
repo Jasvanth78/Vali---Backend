@@ -3,18 +3,24 @@ const OpenAI = require('openai');
 const prisma = new PrismaClient();
 const fs = require('fs');
 const path = require('path');
-const { sendThankYouEmail, sendAdminNotification, sendAccountDeletionEmail } = require('../utils/mailer');
+const { sendThankYouEmail, sendAdminNotification, sendAccountDeletionEmail, sendWelcomeEmail } = require('../utils/mailer');
 const logFile = path.join(__dirname, '../server-debug.log');
 
 const loginUser = async (req, res) => {
   const { name, email, fcmToken } = req.body;
 
   try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
     const user = await prisma.user.upsert({
       where: { email },
       update: { name, fcmToken },
       create: { name, email, fcmToken },
     });
+
+    if (!existingUser) {
+      sendWelcomeEmail(email, name || 'Friend');
+    }
+
     res.json(user);
   } catch (error) {
     fs.appendFileSync(logFile, `User Controller Error: ${error.message}\n${error.stack}\n`);
