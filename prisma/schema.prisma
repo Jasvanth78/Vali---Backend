@@ -92,6 +92,11 @@ model Mugurtham {
   date      DateTime
   time      String
   type      String   // e.g., "Valarpirai", "Theipirai"
+  month     String?  // explicitly store the month
+  thithi    String?
+  natchathiram String?
+  yogam     String?
+  lagnam    String?
   description String?
 }
 
@@ -173,4 +178,20 @@ model Sakunam {
   imageUrl   String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+model SpecialFeature {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  titleTa     String
+  titleEn     String
+  subtitleTa  String?
+  subtitleEn  String?
+  imageUrl    String?
+  bgColor     String   @default("#FFFFFF")
+  textColor   String   @default("#000000")
+  isIcon      Boolean  @default(false)
+  screen      String   
+  order       Int      @default(0)
+  isEnabled   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

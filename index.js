@@ -58,6 +58,7 @@ app.use('/uploads', express.static(uploadsDir));
 // Main Routes
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/special-features', require('./routes/specialFeatureRoutes'));
 app.use('/api/upload', uploadRoutes);
 
 // Basic Health Check Route

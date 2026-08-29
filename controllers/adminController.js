@@ -425,10 +425,10 @@ const getAllUsers = async (req, res) => {
 
 // Mugurtham CRUD
 const createMugurtham = async (req, res) => {
-  const { date, time, type, description } = req.body;
+  const { date, time, type, description, month, thithi, natchathiram, yogam, lagnam } = req.body;
   try {
     const mugurtham = await prisma.mugurtham.create({
-      data: { date: new Date(date), time, type, description },
+      data: { date: new Date(date), time, type, description, month, thithi, natchathiram, yogam, lagnam },
     });
     emitLiveUpdate('mugurtham_updated', mugurtham);
     res.status(201).json(mugurtham);
@@ -645,7 +645,7 @@ const bulkCreateMugurtham = async (req, res) => {
     let processedCount = 0;
     await prisma.$transaction(async (tx) => {
       for (const item of data) {
-        const { date, time, type, description } = item;
+        const { date, time, type, description, month, thithi, natchathiram, yogam, lagnam } = item;
         const recordDate = new Date(date);
         const startOfDay = new Date(recordDate); startOfDay.setUTCHours(0, 0, 0, 0);
         const endOfDay = new Date(recordDate); endOfDay.setUTCHours(23, 59, 59, 999);
@@ -653,7 +653,7 @@ const bulkCreateMugurtham = async (req, res) => {
         await tx.mugurtham.deleteMany({ where: { date: { gte: startOfDay, lte: endOfDay } } });
 
         await tx.mugurtham.create({
-          data: { date: recordDate, time, type, description: description || null }
+          data: { date: recordDate, time, type, description: description || null, month, thithi, natchathiram, yogam, lagnam }
         });
         processedCount++;
       }
@@ -979,11 +979,11 @@ const deleteMugurtham = async (req, res) => {
 
 const updateMugurtham = async (req, res) => {
   const { id } = req.params;
-  const { date, time, type, description } = req.body;
+  const { date, time, type, description, month, thithi, natchathiram, yogam, lagnam } = req.body;
   try {
     const updated = await prisma.mugurtham.update({
       where: { id },
-      data: { date: new Date(date), time, type, description },
+      data: { date: new Date(date), time, type, description, month, thithi, natchathiram, yogam, lagnam },
     });
     emitLiveUpdate('mugurtham_updated', updated);
     res.json(updated);

@@ -5,7 +5,7 @@ const path = require('path');
 const logFile = path.join(__dirname, '../logs/error.log');
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
   port: process.env.SMTP_PORT || 587,
   secure: false, // true for 465, false for other ports
   auth: {
