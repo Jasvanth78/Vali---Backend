@@ -7,14 +7,14 @@ const { sendThankYouEmail, sendAdminNotification, sendAccountDeletionEmail, send
 const logFile = path.join(__dirname, '../server-debug.log');
 
 const loginUser = async (req, res) => {
-  const { name, email, fcmToken } = req.body;
+  const { name, email, fcmToken, dob, tob, pob } = req.body;
 
   try {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     const user = await prisma.user.upsert({
       where: { email },
-      update: { name, fcmToken },
-      create: { name, email, fcmToken },
+      update: { name, fcmToken, dob, tob, pob },
+      create: { name, email, fcmToken, dob, tob, pob },
     });
 
     if (!existingUser) {
