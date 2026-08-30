@@ -4,6 +4,14 @@ const path = require('path');
 
 const logFile = path.join(__dirname, '../logs/error.log');
 
+let welcomeTemplate = '';
+let deleteTemplate = '';
+try {
+  welcomeTemplate = fs.readFileSync(path.join(__dirname, '../templates/WelcomeEmail.html'), 'utf8');
+  deleteTemplate = fs.readFileSync(path.join(__dirname, '../templates/AccountDeletionEmail.html'), 'utf8');
+} catch (e) {
+  console.log('Could not load HTML templates, using plain text fallback.');
+}
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
   port: process.env.SMTP_PORT || 587,
@@ -14,11 +22,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const sender = process.env.SENDER_EMAIL || process.env.SMTP_USER;
+
 const sendThankYouEmail = async (userEmail, userName) => {
   try {
     if (!process.env.SMTP_USER) return; // Skip if not configured
     await transporter.sendMail({
-      from: `"Valikatti Support" <${process.env.SMTP_USER}>`,
+      from: `"Valikatti Support" <${sender}>`,
       to: userEmail,
       subject: 'Thank you for contacting us!',
       text: `Hi ${userName},\n\nThank you for reaching out to us. We have received your message and will get back to you shortly.\n\nBest Regards,\nValikatti Team`,
@@ -32,7 +42,7 @@ const sendAdminNotification = async (adminEmails, contactMessage) => {
   try {
     if (!process.env.SMTP_USER || !adminEmails || adminEmails.length === 0) return;
     await transporter.sendMail({
-      from: `"Valikatti System" <${process.env.SMTP_USER}>`,
+      from: `"Valikatti System" <${sender}>`,
       to: adminEmails.join(','),
       subject: 'New Contact Us Message Received',
       text: `A new message has been submitted via the Contact Us form:\n\nName: ${contactMessage.name}\nEmail: ${contactMessage.email}\nMessage: ${contactMessage.content}\n\nPlease reply to the user if necessary.`,
@@ -47,17 +57,19 @@ const sendAccountDeletionEmail = async (userEmail, adminEmails) => {
     if (!process.env.SMTP_USER) return;
     
     // Send to user
+    const htmlBody = deleteTemplate ? deleteTemplate.replace('Hi <!-- -->User<!-- -->,', `Hi ${userEmail},`) : undefined;
     await transporter.sendMail({
-      from: `"Valikatti Support" <${process.env.SMTP_USER}>`,
+      from: `"Valikatti Support" <${sender}>`,
       to: userEmail,
       subject: 'Account Deleted Successfully',
       text: `Hi,\n\nYour account has been permanently deleted from our system as requested. We are sorry to see you go.\n\nBest Regards,\nValikatti Team`,
+      html: htmlBody
     });
 
     // Send to admins
     if (adminEmails && adminEmails.length > 0) {
       await transporter.sendMail({
-        from: `"Valikatti System" <${process.env.SMTP_USER}>`,
+        from: `"Valikatti System" <${sender}>`,
         to: adminEmails.join(','),
         subject: 'User Account Deleted',
         text: `A user has deleted their account.\n\nEmail: ${userEmail}\n\nNo action is required.`,
@@ -71,11 +83,13 @@ const sendAccountDeletionEmail = async (userEmail, adminEmails) => {
 const sendWelcomeEmail = async (userEmail, userName) => {
   try {
     if (!process.env.SMTP_USER) return;
+    const htmlBody = welcomeTemplate ? welcomeTemplate.replace('Hello <!-- -->Friend<!-- -->,', `Hello ${userName},`) : undefined;
     await transporter.sendMail({
-      from: `"Valikatti Support" <${process.env.SMTP_USER}>`,
+      from: `"Valikatti Support" <${sender}>`,
       to: userEmail,
       subject: 'Welcome to Valikatti! ✨',
       text: `Hello ${userName},\n\nWe're thrilled to have you join Valikatti. Your personal astrology journey starts here!\n\nBest Regards,\nThe Valikatti Team`,
+      html: htmlBody
     });
   } catch (error) {
     console.error(`Mailer Error (Welcome): ${error.message}\n${error.stack}`);
