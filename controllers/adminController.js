@@ -144,7 +144,16 @@ const adminLogin = async (req, res) => {
 
 const getDashboardStats = async (req, res) => {
   try {
-    const totalUsers = await prisma.user.count();
+    // Only count real users (exclude emails ending in @valikatti.app)
+    const totalUsers = await prisma.user.count({
+      where: {
+        NOT: {
+          email: {
+            endsWith: '@valikatti.app'
+          }
+        }
+      }
+    });
     const topRasis = await prisma.user.groupBy({
       by: ['rasi'],
       _count: {
@@ -415,7 +424,16 @@ const getAllFestivals = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    // Only fetch real users (exclude guest/fake emails)
+    const users = await prisma.user.findMany({
+      where: {
+        NOT: {
+          email: {
+            endsWith: '@valikatti.app'
+          }
+        }
+      }
+    });
     res.json(users);
   } catch (error) {
     fs.appendFileSync(logFile, `Controller Error: ${error.message}\n${error.stack}\n`);
