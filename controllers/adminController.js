@@ -144,17 +144,30 @@ const adminLogin = async (req, res) => {
 
 const getDashboardStats = async (req, res) => {
   try {
-    // Only count real users (exclude emails ending in @valikatti.app)
-    const totalUsers = await prisma.user.count({
+    const totalUsers = await prisma.user.count();
+    
+    // newUsers: registered today
+    const startOfDay = new Date();
+    startOfDay.setUTCHours(0, 0, 0, 0);
+    const endOfDay = new Date();
+    endOfDay.setUTCHours(23, 59, 59, 999);
+    
+    const newUsers = await prisma.user.count({
       where: {
-        NOT: {
-          email: {
-            endsWith: '@valikatti.app'
-          }
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay
         }
       }
     });
-    const topRasis = await prisma.user.groupBy({
+
+    const activeUsers = await prisma.user.count({
+      where: {
+        NOT: { fcmToken: null }
+      }
+    });
+
+    const topRasisRaw = await prisma.user.groupBy({
       by: ['rasi'],
       _count: {
         rasi: true,
@@ -166,10 +179,31 @@ const getDashboardStats = async (req, res) => {
       },
       take: 5,
     });
+    
+    const topRasis = topRasisRaw.filter(r => r.rasi !== null);
+    
+    const rasiMap = {
+      'Mesham': 'Aries', 'Rishabam': 'Taurus', 'Midhunam': 'Gemini', 'Kadagam': 'Cancer',
+      'Simmam': 'Leo', 'Kanni': 'Virgo', 'Thulaam': 'Libra', 'Viruchigam': 'Scorpio',
+      'Dhanusu': 'Sagittarius', 'Magaram': 'Capricorn', 'Kumbam': 'Aquarius', 'Meenam': 'Pisces'
+    };
+
+    let mostSelectedRasi = 'None';
+    if (topRasis.length > 0 && topRasis[0].rasi) {
+       const eng = rasiMap[topRasis[0].rasi] || topRasis[0].rasi;
+       mostSelectedRasi = `${topRasis[0].rasi} (${eng})`;
+    }
+
+    const dailyPredictions = await prisma.rasiPalan.count({
+      where: { type: 'daily' }
+    });
 
     res.json({
       totalUsers,
-      topRasis,
+      activeUsers,
+      newUsers,
+      mostSelectedRasi,
+      dailyPredictions
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -424,16 +458,7 @@ const getAllFestivals = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    // Only fetch real users (exclude guest/fake emails)
-    const users = await prisma.user.findMany({
-      where: {
-        NOT: {
-          email: {
-            endsWith: '@valikatti.app'
-          }
-        }
-      }
-    });
+    const users = await prisma.user.findMany();
     res.json(users);
   } catch (error) {
     fs.appendFileSync(logFile, `Controller Error: ${error.message}\n${error.stack}\n`);
