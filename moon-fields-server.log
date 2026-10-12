@@ -1,0 +1,25 @@
+[33m[nodemon] 3.1.14[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node index.js`[39m
+Firebase: Using credentials from local JSON file at D:\Projects Folder\Valikatti\backend\firebase-service-account.json
+Firebase Admin SDK initialized successfully.
+Server is running on port 7005
+Client connected to socket: N0H20Z9xNe3uFdi7AAAB
+Client disconnected from socket: N0H20Z9xNe3uFdi7AAAB
+Client connected to socket: C_6T33fQoqj2HyL5AAAD
+Client disconnected from socket: C_6T33fQoqj2HyL5AAAD
+Client connected to socket: 4pNtE1Cw9Noj1UYVAAAF
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+Firebase: Using credentials from local JSON file at D:\Projects Folder\Valikatti\backend\firebase-service-account.json
+Firebase Admin SDK initialized successfully.
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+Firebase: Using credentials from local JSON file at D:\Projects Folder\Valikatti\backend\firebase-service-account.json
+Firebase Admin SDK initialized successfully.
+Server is running on port 7005
+Client connected to socket: ctRbaaJsYOuazfwXAAAB

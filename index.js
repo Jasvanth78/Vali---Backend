@@ -60,6 +60,9 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/special-features', require('./routes/specialFeatureRoutes'));
 app.use('/api/upload', uploadRoutes);
+app.use('/api/reels', require('./routes/reelsRoutes'));
+app.use('/api/govt-holidays', require('./routes/govtHolidays'));
+app.use('/api/proverbs', require('./routes/proverbs'));
 
 // Basic Health Check Route
 app.get('/', (req, res) => {

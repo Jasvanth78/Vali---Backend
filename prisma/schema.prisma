@@ -39,6 +39,8 @@ model Panchangam {
   date            DateTime
   sunrise         String
   sunset          String
+  moonrise        String?
+  moonset         String?
   tithi           String?  // e.g., "வளர்பிறை பிரதமை / Shukla Prathamai"
   nakshatram      String?  // e.g., "உத்திராடம் / Uttarashada"
   yogam           String?  // e.g., "சுபம் / Subham"
@@ -195,3 +197,38 @@ model SpecialFeature {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Reel {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  youtubeVideoId String
+  title          String
+  description    String?
+  hashtags       String[] @default([])
+  likesCount     Int      @default(0)
+  isEnabled      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model GovtHoliday {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      String   // e.g., "02"
+  month     String   // e.g., "OCT"
+  nameTa    String
+  nameEn    String
+  color     String   @default("#E8F5E9")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Proverb {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  contentTa   String
+  contentEn   String?
+  meaningTa   String?
+  meaningEn   String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

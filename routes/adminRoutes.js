@@ -105,7 +105,7 @@ router.delete('/sakunam/:id', deleteSakunam);
 
 // App Content
 router.get('/app-content', getAppContent);
-router.put('/app-content', updateAppContent);
+router.put('/app-content', protect, updateAppContent);
 
 // App Cards
 router.get('/app-cards', getAppCards);

@@ -23,6 +23,18 @@ const getAppContent = async (req, res) => {
 
 const updateAppContent = async (req, res) => {
   const { key, ta, en } = req.body;
+  if (key === 'home_layout' || key === 'home_weather_location') {
+    try { require('../utils/homeContent').validateHomeContent(key, en); }
+    catch (error) { return res.status(400).json({ error: error.message }); }
+  }
+  if (key === 'home_hero_slider') {
+    try {
+      require('../utils/heroSlider').validateHeroSlider(en);
+      if (ta !== en) throw new Error('Slider configuration must be identical in both content fields.');
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
   try {
     const updated = await prisma.appContent.upsert({
       where: { key },
@@ -326,7 +338,7 @@ const createPanchangam = async (req, res) => {
   const { 
     date, 
     sunrise, 
-    sunset, 
+    sunset, moonrise, moonset, 
     tithi, 
     nakshatram, 
     yogam, 
@@ -344,6 +356,8 @@ const createPanchangam = async (req, res) => {
         date: new Date(date),
         sunrise,
         sunset,
+        moonrise: moonrise === undefined ? undefined : moonrise || null,
+        moonset: moonset === undefined ? undefined : moonset || null,
         tithi: tithi || null,
         nakshatram: nakshatram || null,
         yogam: yogam || null,
@@ -368,7 +382,7 @@ const updatePanchangam = async (req, res) => {
   const { 
     date, 
     sunrise, 
-    sunset, 
+    sunset, moonrise, moonset, 
     tithi, 
     nakshatram, 
     yogam, 
@@ -387,6 +401,8 @@ const updatePanchangam = async (req, res) => {
         date: new Date(date),
         sunrise,
         sunset,
+        moonrise: moonrise === undefined ? undefined : moonrise || null,
+        moonset: moonset === undefined ? undefined : moonset || null,
         tithi: tithi || null,
         nakshatram: nakshatram || null,
         yogam: yogam || null,
@@ -619,7 +635,7 @@ const bulkCreatePanchangam = async (req, res) => {
 
     await prisma.$transaction(async (tx) => {
       for (const item of data) {
-        const { date, sunrise, sunset, tithi, nakshatram, yogam, karanam, details, nallaNeram, gowriNallaNeram, rahuKalam, yemagandam, kuligai } = item;
+        const { date, sunrise, sunset, moonrise, moonset, tithi, nakshatram, yogam, karanam, details, nallaNeram, gowriNallaNeram, rahuKalam, yemagandam, kuligai } = item;
         const recordDate = new Date(date);
         const startOfDay = new Date(recordDate); startOfDay.setUTCHours(0, 0, 0, 0);
         const endOfDay = new Date(recordDate); endOfDay.setUTCHours(23, 59, 59, 999);
@@ -628,7 +644,7 @@ const bulkCreatePanchangam = async (req, res) => {
 
         await tx.panchangam.create({
           data: {
-            date: recordDate, sunrise, sunset, tithi: tithi || null, nakshatram: nakshatram || null, yogam: yogam || null, karanam: karanam || null, details: details || '', nallaNeram: nallaNeram || null, gowriNallaNeram: gowriNallaNeram || null, rahuKalam: rahuKalam || null, yemagandam: yemagandam || null, kuligai: kuligai || null
+            date: recordDate, sunrise, sunset, moonrise: moonrise || null, moonset: moonset || null, tithi: tithi || null, nakshatram: nakshatram || null, yogam: yogam || null, karanam: karanam || null, details: details || '', nallaNeram: nallaNeram || null, gowriNallaNeram: gowriNallaNeram || null, rahuKalam: rahuKalam || null, yemagandam: yemagandam || null, kuligai: kuligai || null
           }
         });
         processedCount++;
