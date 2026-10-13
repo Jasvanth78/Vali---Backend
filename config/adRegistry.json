@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "key": "home",
+      "label": "Home",
+      "slots": [
+        {
+          "key": "inline_banner",
+          "label": "Existing Home banner",
+          "formats": [
+            "banner"
+          ],
+          "size": "medium_rectangle"
+        },
+        {
+          "key": "bottom_banner",
+          "label": "Additional Home footer ad",
+          "formats": [
+            "banner",
+            "native"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "articles",
+      "label": "Articles",
+      "slots": [
+        {
+          "key": "between_cards",
+          "label": "Existing banner between articles",
+          "formats": [
+            "banner"
+          ],
+          "size": "medium_rectangle"
+        },
+        {
+          "key": "article_swipe",
+          "label": "Existing interstitial after article swipes",
+          "formats": [
+            "interstitial"
+          ]
+        },
+        {
+          "key": "audio_unlock",
+          "label": "Existing opt-in audio reward",
+          "formats": [
+            "rewarded"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "calendar",
+      "label": "Calendar",
+      "slots": [
+        {
+          "key": "bottom_banner",
+          "label": "Below calendar content",
+          "formats": [
+            "banner",
+            "native"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "panchangam",
+      "label": "Panchangam",
+      "slots": [
+        {
+          "key": "bottom_banner",
+          "label": "Below daily details",
+          "formats": [
+            "banner",
+            "native"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "festivals",
+      "label": "Festivals",
+      "slots": [
+        {
+          "key": "bottom_banner",
+          "label": "Below festival lists",
+          "formats": [
+            "banner",
+            "native"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "poster_posts",
+      "label": "Poster Posts",
+      "slots": [
+        {
+          "key": "between_cards",
+          "label": "Between every fourth poster",
+          "formats": [
+            "banner",
+            "native"
+          ]
+        }
+      ]
+    }
+  ]
+}

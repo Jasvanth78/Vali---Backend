@@ -42,6 +42,7 @@ exports.createReel = async (req, res) => {
         hashtags: hashtags || [],
       },
     });
+    require('../services/notificationService').notificationService().event('video_published', reel.id, { video_title: reel.title || 'New video' }, { videoId: reel.id }).catch(() => console.error('Video notification service unavailable'));
     res.status(201).json(reel);
   } catch (error) {
     console.error('Error creating reel:', error);

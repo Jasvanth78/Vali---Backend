@@ -13,6 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model AdPlacement {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  pageKey         String
+  placementKey    String
+  adFormat        String
+  androidAdUnitId String   @default("")
+  iosAdUnitId     String   @default("")
+  isEnabled       Boolean  @default(false)
+  sortOrder       Int      @default(0)
+  frequencyCap    Int      @default(120)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@unique([pageKey, placementKey], map: "pageKey_1_placementKey_1")
+  @@map("ad_placements")
+}
+
+model AdSettings {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  key           String   @unique(map: "key_1")
+  globalEnabled Boolean  @default(false)
+  pages         Json
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@map("ad_settings")
+}
+
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
@@ -60,6 +86,177 @@ model Notification {
   message   String
   target    String   // all, rasi_name, user_id
   createdAt DateTime @default(now())
+  categoryKey String?
+  definitionKey String?
+  destination String?
+  parameters Json?
+  runId String?
+  recipientUserIds String[] @default([])
+}
+
+model NotificationGlobalSettings {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  key String @unique(map: "key_1")
+  isEnabled Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_settings")
+}
+
+model NotificationCategory {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  key String @unique(map: "key_1")
+  name String
+  description String
+  isEnabled Boolean @default(true)
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_categories")
+}
+
+model NotificationDefinition {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  key String @unique(map: "key_1")
+  categoryKey String
+  name String
+  description String
+  title String
+  message String
+  imageUrl String?
+  destination String
+  parameters Json
+  audience Json
+  trigger String
+  isEnabled Boolean @default(true)
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_definitions")
+}
+
+model NotificationRule {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  definitionKey String
+  trigger String
+  templateId String?
+  audience Json
+  schedule Json?
+  nextRun DateTime?
+  lastRun DateTime?
+  lastStatus String?
+  isEnabled Boolean @default(true)
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_rules")
+}
+
+model NotificationTemplate {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String
+  title String
+  message String
+  isEnabled Boolean @default(true)
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_templates")
+}
+
+model NotificationCampaign {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  requestId String @unique(map: "requestId_1")
+  definitionKey String
+  title String
+  message String
+  imageUrl String?
+  destination String
+  parameters Json
+  audience Json
+  status String
+  schedule Json?
+  nextRun DateTime?
+  lastRun DateTime?
+  isEnabled Boolean @default(true)
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_campaigns")
+}
+
+model NotificationSendLog {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  idempotencyKey String @unique(map: "idempotencyKey_1")
+  definitionKey String
+  categoryKey String?
+  ruleId String?
+  campaignId String?
+  title String?
+  message String?
+  audience Json?
+  source String
+  status String
+  attempted Int @default(0)
+  accepted Int @default(0)
+  failed Int @default(0)
+  openCount Int @default(0)
+  error String?
+  createdAt DateTime @default(now())
+  finishedAt DateTime?
+  @@map("notification_logs")
+}
+
+model NotificationDeliveryAttempt {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  runId String @db.ObjectId
+  tokenHash String
+  userId String?
+  deviceId String?
+  status String
+  errorCode String?
+  createdAt DateTime @default(now())
+  finishedAt DateTime?
+  openedAt DateTime?
+  @@unique([runId, tokenHash], map: "runId_1_tokenHash_1")
+  @@map("notification_attempts")
+}
+
+model NotificationDevice {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId String @unique(map: "deviceId_1")
+  secretHash String
+  token String @unique(map: "token_1")
+  platform String
+  topics String[]
+  isEnabled Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_devices")
+}
+
+model UserNotificationPreference {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId String
+  categoryKey String
+  isEnabled Boolean @default(true)
+  updatedAt DateTime @updatedAt
+  @@unique([deviceId, categoryKey], map: "deviceId_1_categoryKey_1")
+  @@map("notification_preferences")
+}
+
+model NotificationSegment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String
+  userIds String[]
+  isEnabled Boolean @default(true)
+  isArchived Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("notification_segments")
 }
 
 model Admin {
@@ -230,5 +427,51 @@ model Proverb {
   imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Independent image feed. Existing Blog/User models are intentionally unchanged.
+model PosterCategory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique(map: "slug_1")
+  nameTa    String
+  nameEn    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  @@map("poster_categories")
+}
+
+model PosterPost {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl    String
+  caption     String?
+  categoryId  String   @db.ObjectId
+  status      String   @default("draft")
+  isEnabled   Boolean  @default(true)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([status, isEnabled, publishedAt(sort: Desc), id(sort: Desc)], map: "status_1_isEnabled_1_publishedAt_-1__id_-1")
+  @@index([categoryId, publishedAt(sort: Desc)], map: "categoryId_1_publishedAt_-1")
+  @@map("poster_posts")
+}
+
+model PosterLike {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId    String   @db.ObjectId
+  actorId   String
+  createdAt DateTime @default(now())
+  @@unique([postId, actorId], map: "postId_1_actorId_1")
+  @@index([actorId, createdAt(sort: Desc)], map: "actorId_1_createdAt_-1")
+  @@map("poster_likes")
+}
+
+model PosterBookmark {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId    String   @db.ObjectId
+  actorId   String
+  createdAt DateTime @default(now())
+  @@unique([postId, actorId], map: "postId_1_actorId_1")
+  @@index([actorId, createdAt(sort: Desc)], map: "actorId_1_createdAt_-1")
+  @@map("poster_bookmarks")
 }
 

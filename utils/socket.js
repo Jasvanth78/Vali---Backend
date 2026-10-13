@@ -29,6 +29,9 @@ const getIO = () => {
 };
 
 const emitLiveUpdate = (event, data) => {
+  if (['panchangam_updated', 'festivals_updated', 'poster_posts_updated'].includes(event)) {
+    require('../services/notificationService').notificationService().liveEvent(event, data || {}).catch(() => console.error('Optional notification event unavailable'));
+  }
   if (io) {
     io.emit(event, data);
   }

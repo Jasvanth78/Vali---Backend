@@ -334,9 +334,11 @@ const getUserNotifications = async (req, res) => {
   try {
     let userRasi = null;
     let userCreatedAt = null;
+    let notificationUserId = null;
     if (email && email !== 'all') {
       const user = await prisma.user.findUnique({ where: { email } });
       if (user) {
+        notificationUserId = user.id;
         if (user.rasi) {
           userRasi = user.rasi.trim();
         }
@@ -395,6 +397,7 @@ const getUserNotifications = async (req, res) => {
       }
 
       const targetRaw = (n.target || 'all').trim();
+      if (targetRaw.startsWith('campaign:')) return !!notificationUserId && (n.recipientUserIds || []).includes(notificationUserId);
       const canonicalTarget = rasiMap[targetRaw.toLowerCase()] || targetRaw;
       if (canonicalTarget.toLowerCase() === 'all') return true;
       if (canonicalUserRasi && canonicalTarget.toLowerCase() === canonicalUserRasi.toLowerCase()) return true;

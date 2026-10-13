@@ -1,0 +1,5 @@
+{
+  "reason": "User explicitly requested migrating existing Article ad placements to dynamic AdMob management. Only ad lifecycle, ad pagination and reward hooks were changed; article data APIs, content rendering, likes, bookmarks and admin forms remain protected by the original baseline.",
+  "path": "mobile_app/lib/spiritual_feed_screen.dart",
+  "normalizedSha256": "86DE393B7ACDB0E02114A43452C7593ECC04760AC4B643D7C107084381EE1394"
+}

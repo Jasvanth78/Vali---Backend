@@ -1,0 +1,7 @@
+{
+  "reason": "Notification-only hooks route existing Article sends through the admin-controlled dispatcher and add notification inbox metadata. Article CRUD, content, rendering and Blog storage remain unchanged.",
+  "files": {
+    "backend/controllers/adminController.js": "AC2BE3949B4150A3344BB3A6402790D54CC6811FA8A3EC444103DC827D1D84E5",
+    "backend/controllers/userController.js": "C35E92820D2CED5BC78472BA2FED537BD3080E32FA41CBD4C806FAFAE654D989"
+  }
+}

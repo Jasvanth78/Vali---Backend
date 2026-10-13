@@ -50,88 +50,9 @@ const updateAppContent = async (req, res) => {
   }
 };
 
-const sendPushNotificationToAll = async (title, body) => {
-  try {
-    // Check if Firebase Admin SDK is properly initialized
-    if (!admin || !admin.messaging || !admin.apps || admin.apps.length === 0) {
-      console.error('Firebase Admin SDK not initialized. Cannot send notifications.');
-      return;
-    }
-
-    const users = await prisma.user.findMany({
-      where: { NOT: { fcmToken: null } },
-      select: { fcmToken: true, email: true }
-    });
-
-    const tokens = [...new Set(users.map(u => u.fcmToken).filter(t => t && t.length > 0))];
-    if (tokens.length === 0) {
-      console.log('No users with valid FCM tokens found. Skipping notification.');
-      return;
-    }
-
-    console.log(`Sending push notification to ${tokens.length} devices...`);
-
-    const message = {
-      notification: { title, body },
-      data: {
-        title,
-        body,
-        click_action: 'FLUTTER_NOTIFICATION_CLICK',
-      },
-      android: {
-        priority: 'high',
-        notification: {
-          title,
-          body,
-          channelId: 'valikati_high_importance_channel_v2',
-          priority: 'high',
-          sound: 'default',
-          defaultSound: true,
-          defaultVibrateTimings: true,
-          visibility: 'public',
-        },
-      },
-      apns: {
-        payload: {
-          aps: {
-            sound: 'default',
-            contentAvailable: true,
-          },
-        },
-      },
-      tokens: tokens,
-    };
-
-    const response = await admin.messaging().sendEachForMulticast(message);
-    console.log(`Push notification results: ${response.successCount} success, ${response.failureCount} failed.`);
-
-    if (response.failureCount > 0) {
-      const tokensToRemove = [];
-      response.responses.forEach((resp, idx) => {
-        if (!resp.success) {
-          console.error(`Failed to send to token ${idx}: ${resp.error?.code} - ${resp.error?.message}`);
-          if (resp.error?.code === 'messaging/invalid-registration-token' ||
-              resp.error?.code === 'messaging/registration-token-not-registered') {
-            tokensToRemove.push(tokens[idx]);
-          }
-        }
-      });
-
-      if (tokensToRemove.length > 0) {
-        try {
-          await prisma.user.updateMany({
-            where: { fcmToken: { in: tokensToRemove } },
-            data: { fcmToken: null }
-          });
-          console.log(`Cleaned up ${tokensToRemove.length} unregistered FCM tokens from DB.`);
-        } catch (cleanErr) {
-          console.error('Error cleaning up invalid tokens:', cleanErr.message);
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Error sending push notifications:', error.message);
-  }
+const sendPushNotificationToAll = async (title, body, context = {}) => {
+  try { return await require('../services/notificationService').notificationService().dispatch({ definitionKey: 'general', title, message: body, audience: { kind: 'all' }, idempotencyKey: context.idempotencyKey || require('node:crypto').randomUUID(), ...context }); }
+  catch (error) { console.error('Notification dispatch unavailable:', error.code || 'service_error'); }
 };
 
 const adminLogin = async (req, res) => {
@@ -222,82 +143,9 @@ const getDashboardStats = async (req, res) => {
   }
 };
 
-const sendPushNotificationToRasi = async (targetRasi, title, body) => {
-  try {
-    if (!admin || !admin.messaging) return;
-
-    const rasiMap = {
-      'aries': 'Mesham', 'taurus': 'Rishabam', 'gemini': 'Midhunam', 'cancer': 'Kadagam',
-      'leo': 'Simmam', 'virgo': 'Kanni', 'libra': 'Thulaam', 'scorpio': 'Viruchigam',
-      'sagittarius': 'Dhanusu', 'capricorn': 'Magaram', 'aquarius': 'Kumbam', 'pisces': 'Meenam',
-      'mesham': 'Mesham', 'rishabam': 'Rishabam', 'midhunam': 'Midhunam', 'kadagam': 'Kadagam',
-      'simmam': 'Simmam', 'kanni': 'Kanni', 'thulaam': 'Thulaam', 'viruchigam': 'Viruchigam',
-      'dhanusu': 'Dhanusu', 'magaram': 'Magaram', 'kumbam': 'Kumbam', 'meenam': 'Meenam'
-    };
-
-    const canonicalTarget = rasiMap[targetRasi.toLowerCase()] || targetRasi;
-    const targetAliases = Object.keys(rasiMap).filter(k => rasiMap[k].toLowerCase() === canonicalTarget.toLowerCase());
-    const possibleValues = Array.from(new Set([
-      canonicalTarget,
-      targetRasi,
-      ...targetAliases,
-      ...targetAliases.map(a => a.charAt(0).toUpperCase() + a.slice(1))
-    ]));
-
-    const users = await prisma.user.findMany({
-      where: {
-        rasi: { in: possibleValues },
-        NOT: { fcmToken: null }
-      },
-      select: { fcmToken: true }
-    });
-
-    const tokens = [...new Set(users.map(u => u.fcmToken).filter(t => t && t.length > 0))];
-
-    // Save notification to database targeting this specific rasi
-    try {
-      await prisma.notification.create({
-        data: {
-          title,
-          message: body,
-          target: canonicalTarget,
-          createdAt: new Date(),
-        }
-      });
-    } catch (_) {}
-
-    if (tokens.length === 0) return;
-
-    const message = {
-      notification: { title, body },
-      data: {
-        title,
-        body,
-        click_action: 'FLUTTER_NOTIFICATION_CLICK',
-        target: canonicalTarget,
-      },
-      android: {
-        priority: 'high',
-        notification: {
-          title,
-          body,
-          channelId: 'valikati_high_importance_channel_v2',
-          priority: 'high',
-          sound: 'default',
-          defaultSound: true,
-          defaultVibrateTimings: true,
-          visibility: 'public',
-        },
-      },
-      apns: { payload: { aps: { sound: 'default', contentAvailable: true } } },
-      tokens: tokens,
-    };
-
-    await admin.messaging().sendEachForMulticast(message);
-    console.log(`Rasi-targeted notification sent to ${tokens.length} devices for ${canonicalTarget}`);
-  } catch (error) {
-    console.error('Error sending rasi notification:', error.message);
-  }
+const sendPushNotificationToRasi = async (targetRasi, title, body, eventId) => {
+  try { return await require('../services/notificationService').notificationService().event('rasi_published', eventId || require('node:crypto').randomUUID(), { rasi: targetRasi }, { rasi: targetRasi }, { kind: 'rasi', rasi: targetRasi }); }
+  catch (error) { console.error('Rasi notification dispatch unavailable:', error.code || 'service_error'); }
 };
 
 // Rasi Palan CRUD
@@ -312,7 +160,8 @@ const createRasiPalan = async (req, res) => {
     sendPushNotificationToRasi(
       rasi,
       "தினசரி ராசி பலன் 🌅",
-      `உங்கள் ${rasi} ராசிக்கான ${type} பலன்கள் வெளியிடப்பட்டுள்ளன!`
+      `உங்கள் ${rasi} ராசிக்கான ${type} பலன்கள் வெளியிடப்பட்டுள்ளன!`,
+      palan.id
     );
 
     // Emit live update to all connected apps
@@ -610,7 +459,8 @@ const bulkCreateRasiPalan = async (req, res) => {
       sendPushNotificationToRasi(
         rasi,
         "தினசரி ராசி பலன் 🌅",
-        `உங்கள் ${rasi} ராசிக்கான பலன்கள் வெளியிடப்பட்டுள்ளன!`
+        `உங்கள் ${rasi} ராசிக்கான பலன்கள் வெளியிடப்பட்டுள்ளன!`,
+        require('node:crypto').createHash('sha256').update(JSON.stringify(data) + rasi).digest('hex')
       );
     }
     
@@ -773,146 +623,14 @@ const getAllNallaNeram = async (req, res) => {
 };
 
 const manualSendNotification = async (req, res) => {
-  const { title, body, target, rasi } = req.body;
   try {
-    // Check if Firebase Admin SDK is properly initialized
-    if (!admin || !admin.messaging || !admin.apps || admin.apps.length === 0) {
-      return res.status(400).json({ error: 'Firebase is not initialized on the server. Please set the FIREBASE_SERVICE_ACCOUNT environment variable in your server settings (Render / Dokploy).' });
-    }
-
-    const rasiMap = {
-      'aries': 'Mesham', 'taurus': 'Rishabam', 'gemini': 'Midhunam', 'cancer': 'Kadagam',
-      'leo': 'Simmam', 'virgo': 'Kanni', 'libra': 'Thulaam', 'scorpio': 'Viruchigam',
-      'sagittarius': 'Dhanusu', 'capricorn': 'Magaram', 'aquarius': 'Kumbam', 'pisces': 'Meenam',
-      'mesham': 'Mesham', 'rishabam': 'Rishabam', 'midhunam': 'Midhunam', 'kadagam': 'Kadagam',
-      'simmam': 'Simmam', 'kanni': 'Kanni', 'thulaam': 'Thulaam', 'viruchigam': 'Viruchigam',
-      'dhanusu': 'Dhanusu', 'magaram': 'Magaram', 'kumbam': 'Kumbam', 'meenam': 'Meenam'
-    };
-
-    let users;
-    let canonicalTarget = target;
-    const targetRasiInput = (target === 'rasi' || target === 'individual') ? rasi : target;
-
-    if (target === 'all') {
-      canonicalTarget = 'all';
-      users = await prisma.user.findMany({
-        where: { NOT: { fcmToken: null } },
-        select: { fcmToken: true }
-      });
-    } else if (targetRasiInput && targetRasiInput.trim().length > 0) {
-      canonicalTarget = rasiMap[targetRasiInput.toLowerCase()] || targetRasiInput;
-      const targetAliases = Object.keys(rasiMap).filter(k => rasiMap[k].toLowerCase() === canonicalTarget.toLowerCase());
-      const possibleValues = Array.from(new Set([
-        canonicalTarget,
-        targetRasiInput,
-        ...targetAliases,
-        ...targetAliases.map(a => a.charAt(0).toUpperCase() + a.slice(1))
-      ]));
-
-      users = await prisma.user.findMany({
-        where: {
-          rasi: { in: possibleValues },
-          NOT: { fcmToken: null }
-        },
-        select: { fcmToken: true }
-      });
-    } else {
-      return res.status(400).json({ error: 'Invalid target or missing rasi' });
-    }
-
-    const tokens = [...new Set(users.map(u => u.fcmToken).filter(t => t && t.length > 0))];
-    if (tokens.length === 0) {
-      return res.json({ message: 'No users found with valid tokens for this target.' });
-    }
-
-    console.log(`Manual notification: Sending to ${tokens.length} devices. Title: "${title}"`);
-
-    // Save notification to database first
-    try {
-      await prisma.notification.create({
-        data: {
-          title,
-          message: body,
-          target: target === 'rasi' ? canonicalTarget : target,
-          createdAt: new Date(),
-        }
-      });
-    } catch (dbError) {
-      console.error('Error saving notification to DB:', dbError.message);
-      // Continue with sending the FCM message even if DB saving fails
-    }
-
-    const message = {
-      notification: { title, body },
-      data: {
-        title,
-        body,
-        click_action: 'FLUTTER_NOTIFICATION_CLICK',
-        target: target === 'rasi' ? canonicalTarget : target,
-      },
-      android: {
-        priority: 'high',
-        notification: {
-          title,
-          body,
-          channelId: 'valikati_high_importance_channel_v2',
-          priority: 'high',
-          sound: 'default',
-          defaultSound: true,
-          defaultVibrateTimings: true,
-          visibility: 'public',
-        },
-      },
-      apns: {
-        payload: {
-          aps: {
-            sound: 'default',
-            contentAvailable: true,
-          },
-        },
-      },
-      tokens: tokens,
-    };
-
-    const response = await admin.messaging().sendEachForMulticast(message);
-    console.log(`Manual notification results: ${response.successCount} success, ${response.failureCount} failed.`);
-
-    // Log individual failures and clean up unregistered tokens
-    if (response.failureCount > 0) {
-      const tokensToRemove = [];
-      response.responses.forEach((resp, idx) => {
-        if (!resp.success) {
-          console.error(`Failed to send to token ${idx}: ${resp.error?.code} - ${resp.error?.message}`);
-          if (resp.error?.code === 'messaging/invalid-registration-token' ||
-              resp.error?.code === 'messaging/registration-token-not-registered') {
-            tokensToRemove.push(tokens[idx]);
-          }
-        }
-      });
-
-      if (tokensToRemove.length > 0) {
-        try {
-          await prisma.user.updateMany({
-            where: { fcmToken: { in: tokensToRemove } },
-            data: { fcmToken: null }
-          });
-          console.log(`Cleaned up ${tokensToRemove.length} unregistered FCM tokens from DB.`);
-        } catch (cleanErr) {
-          console.error('Error cleaning up invalid tokens:', cleanErr.message);
-        }
-      }
-    }
-
-    res.json({ 
-      message: `Successfully sent ${response.successCount} of ${tokens.length} notifications.`, 
-      successCount: response.successCount,
-      failureCount: response.failureCount,
-      totalTargeted: tokens.length
-    });
-  } catch (error) {
-    console.error('Manual notification error:', error.message);
-    res.status(500).json({ error: error.message });
-  }
+    const service = require('../services/notificationService').notificationService();
+    const { title, body, target, rasi } = req.body;
+    const audience = target === 'all' ? { kind: 'all' } : { kind: 'rasi', rasi: rasi || target };
+    const campaign = await service.save('campaigns', { definitionKey: 'general', title, message: body, audience, destination: 'home', parameters: {}, status: 'draft', isEnabled: true, requestId: req.headers['idempotency-key'] || require('node:crypto').randomUUID() });
+    const result = await service.sendCampaign(campaign.id);
+    res.json({ message: 'Notification request processed. Accepted by FCM does not guarantee device delivery.', ...result, successCount: result.accepted || 0, failureCount: result.failed || 0 });
+  } catch (error) { res.status(error.status || 503).json({ error: error.status ? error.message : 'Notification service unavailable' }); }
 };
 
 const getAppCards = async (req, res) => {
@@ -1095,24 +813,8 @@ const createBlog = async (req, res) => {
     });
 
     if (sendNotification !== false) {
-      sendPushNotificationToAll(
-        'புதிய ஆன்மீகப் பதிவு 📖',
-        `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`
-      );
-
-      try {
-        if (prisma.notification) {
-          await prisma.notification.create({
-            data: {
-              title: 'புதிய ஆன்மீகப் பதிவு 📖',
-              message: `புதிய பதிவு: "${blogTitle}". படிக்க உடனே கிளிக் செய்யுங்கள்!`,
-              target: 'all'
-            }
-          });
-        }
-      } catch (dbErr) {
-        console.log('Blog notification DB log warning:', dbErr.message);
-      }
+      const blogTitle = titleTa || titleEn || '';
+      require('../services/notificationService').notificationService().event('article_published', blog.id, { article_title: blogTitle }, { articleId: blog.id }).catch(() => console.error('Notification service unavailable'));
     }
 
     emitLiveUpdate('blog_created', blog);
@@ -1342,24 +1044,8 @@ const createEvent = async (req, res) => {
     });
 
     if (sendNotification !== false) {
-      sendPushNotificationToAll(
-        'வரவிருக்கும் ஆன்மீக நிகழ்வு 📅',
-        `நிகழ்வு: "${eventTitle}". விரிவான விபரங்களை அறிய கிளிக் செய்யவும்!`
-      );
-
-      try {
-        if (prisma.notification) {
-          await prisma.notification.create({
-            data: {
-              title: 'வரவிருக்கும் ஆன்மீக நிகழ்வு 📅',
-              message: `நிகழ்வு: "${eventTitle}". விரிவான விபரங்களை அறிய கிளிக் செய்யவும்!`,
-              target: 'all'
-            }
-          });
-        }
-      } catch (dbErr) {
-        console.log('Event notification DB log warning:', dbErr.message);
-      }
+      const eventTitle = titleTa || titleEn || '';
+      require('../services/notificationService').notificationService().event('event_created', event.id, { event_title: eventTitle }, {}).catch(() => console.error('Notification service unavailable'));
     }
 
     emitLiveUpdate('event_created', event);
@@ -1410,24 +1096,7 @@ const deleteEvent = async (req, res) => {
 };
 
 const sendDailyMorningNotification = async () => {
-  try {
-    const title = 'இன்றைய ராசி பலன் 🌅';
-    const body = 'உங்கள் ராசிக்கான இன்றைய சுப பலன்களைப் பார்க்க உடனே கிளிக் செய்யுங்கள்!';
-
-    await prisma.notification.create({
-      data: {
-        title,
-        message: body,
-        target: 'all',
-        createdAt: new Date(),
-      }
-    });
-
-    await sendPushNotificationToAll(title, body);
-    console.log('Daily 7:00 AM notification sent successfully.');
-  } catch (error) {
-    console.error('Error in sendDailyMorningNotification:', error.message);
-  }
+  await require('../services/notificationService').notificationService().tick();
 };
 
 
