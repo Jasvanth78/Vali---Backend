@@ -23,6 +23,8 @@ const getAppContent = async (req, res) => {
 
 const updateAppContent = async (req, res) => {
   const { key, ta, en } = req.body;
+  try { require('../utils/appBranding').validateBranding(key, ta, en); }
+  catch (error) { return res.status(400).json({ error: error.message }); }
   if (key === 'home_layout' || key === 'home_weather_location') {
     try { require('../utils/homeContent').validateHomeContent(key, en); }
     catch (error) { return res.status(400).json({ error: error.message }); }

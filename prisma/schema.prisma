@@ -230,6 +230,7 @@ model NotificationDevice {
   secretHash String
   token String @unique(map: "token_1")
   platform String
+  customNotificationIcons Boolean @default(false)
   topics String[]
   isEnabled Boolean @default(true)
   createdAt DateTime @default(now())

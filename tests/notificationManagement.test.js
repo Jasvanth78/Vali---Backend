@@ -18,8 +18,11 @@ test('notification hierarchy, preferences and idempotency use mocked FCM', { tim
     await db.collection('Notification').insertOne({ title: 'Preserved legacy history', createdAt: new Date() });
     assert.deepEqual(await migrate(db), { categories: 8, definitions: 5, rules: 4 });
     await db.collection('User').insertOne({ name: 'Test', email: 'notify@test.invalid', fcmToken: 'legacy-token', rasi: 'Mesham' });
+    await db.collection('AppContent').insertOne({ key: 'notification_icon', en: 'ic_notification_star', ta: 'ic_notification_star' });
     const firebase = () => ({ sendEachForMulticast: async request => {
       providerCalls++;
+      assert.equal(request.android.notification.icon, 'ic_notification_star');
+      assert.equal(request.data.notificationIcon, 'ic_notification_star');
       return { successCount: request.tokens.length, failureCount: 0, responses: request.tokens.map(() => ({ success: true })) };
     } });
     const service = createNotificationService({ dbProvider: async () => db, firebase });

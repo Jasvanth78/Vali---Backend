@@ -87,13 +87,17 @@ function createNotificationService({ dbProvider = store.database, firebase = () 
           await attempts.updateMany({ runId: log._id, status: 'sending' }, { $set: { status: 'skipped' } }); break;
         }
         attempted += sendable.length;
+        const branding = await (await dbProvider()).collection('AppContent').findOne({ key: 'notification_icon' });
+        const notificationIcon = require('../utils/appBranding').notificationIcon(branding?.en || branding?.ta);
+        const customIcon = require('../utils/appBranding').customIcon(branding?.en || branding?.ta);
+        const configuredIcon = customIcon ? { ...customIcon, imageUrl: origin ? `${origin.replace(/\/$/, '')}${customIcon.imageUrl}` : customIcon.imageUrl } : null;
         await logs.updateOne({ _id: log._id }, { $set: { attempted } });
-        const response = await firebase().sendEachForMulticast({
+        const response = await require('../utils/brandedNotification').sendBrandedNotification(firebase(), sendable, {
           tokens: sendable.map(device => device.token), notification: { title, body: message, ...(fullImage ? { imageUrl: fullImage } : {}) },
-          data: { title, body: message, categoryKey: definition.categoryKey, definitionKey: definition.key, destination: destination.destination, parameters: JSON.stringify(destination.parameters), notificationId: log._id.toString(), click_action: 'FLUTTER_NOTIFICATION_CLICK' },
-          android: { priority: 'high', notification: { channelId: 'valikati_high_importance_channel_v2', sound: 'default', ...(fullImage ? { imageUrl: fullImage } : {}) } },
+          data: { title, body: message, notificationIcon, categoryKey: definition.categoryKey, definitionKey: definition.key, destination: destination.destination, parameters: JSON.stringify(destination.parameters), notificationId: log._id.toString(), click_action: 'FLUTTER_NOTIFICATION_CLICK' },
+          android: { priority: 'high', notification: { icon: notificationIcon, channelId: 'valikati_high_importance_channel_v2', sound: 'default', ...(fullImage ? { imageUrl: fullImage } : {}) } },
           apns: { payload: { aps: { sound: 'default', ...(fullImage ? { mutableContent: true } : {}) } }, ...(fullImage ? { fcmOptions: { imageUrl: fullImage } } : {}) },
-        });
+        }, configuredIcon);
         accepted += response.successCount; failed += response.failureCount;
         for (let index = 0; index < sendable.length; index++) {
           const result = response.responses[index], device = sendable[index];
@@ -243,7 +247,7 @@ function createNotificationService({ dbProvider = store.database, firebase = () 
     if (existing && existing.secretHash !== secretHash) throw new v.NotificationError(401, 'Invalid device credential');
     const duplicate = await c.findOne({ token, deviceId: { $ne: deviceId } });
     if (duplicate) throw new v.NotificationError(409, 'Token already belongs to a registered installation');
-    await c.updateOne({ deviceId }, { $set: { secretHash, token, platform: body.platform, isEnabled: body.isEnabled, topics: Array.isArray(body.topics) ? body.topics.filter(topic => /^[a-zA-Z0-9_-]{1,80}$/.test(topic)).slice(0, 20) : [], updatedAt: clock() }, $setOnInsert: { deviceId, createdAt: clock() } }, { upsert: true });
+    await c.updateOne({ deviceId }, { $set: { secretHash, token, platform: body.platform, isEnabled: body.isEnabled, customNotificationIcons: body.customNotificationIcons === true && body.platform === 'android', topics: Array.isArray(body.topics) ? body.topics.filter(topic => /^[a-zA-Z0-9_-]{1,80}$/.test(topic)).slice(0, 20) : [], updatedAt: clock() }, $setOnInsert: { deviceId, createdAt: clock() } }, { upsert: true });
     return { registered: true };
   }
   async function verifyDevice(deviceId, secret) {

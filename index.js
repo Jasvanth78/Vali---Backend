@@ -69,6 +69,7 @@ app.use('/api/ad-config', adRouters.publicRouter);
 app.use('/api/admin/ad-placements', adRouters.adminRouter);
 const notificationRouters = require('./routes/notificationRoutes').createNotificationRouters();
 app.use('/api/admin/notifications', notificationRouters.adminRouter);
+app.use('/api/admin/notification-icons', require('./routes/notificationIconRoutes'));
 app.use('/api/notifications', notificationRouters.deviceRouter);
 
 // Basic Health Check Route
