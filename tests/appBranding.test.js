@@ -1,8 +1,13 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { validateBranding, notificationIcon, customIcon } = require('../utils/appBranding');
+test('shortcut images allow uploaded URLs and reject inconsistent or invalid content', () => {
+  for (const value of ['', 'https://example.com/icon.webp', '/uploads/icon.png']) validateBranding('launcher_shortcut_image', value, value);
+  for (const value of ['javascript:alert(1)', 'data:image/png;base64,x', 'not a URL']) assert.throws(() => validateBranding('launcher_shortcut_image', value, value));
+  assert.throws(() => validateBranding('launcher_shortcut_image', '', 'https://example.com/icon.png'));
+});
 test('bundled icon settings reject unsupported and inconsistent values', () => {
-  for (const value of ['default', 'emerald', 'gold']) validateBranding('launcher_icon', value, value);
+  for (const value of ['default', 'emerald', 'gold', 'blue', 'purple', 'red', 'pink', 'orange', 'teal', 'black', 'white']) validateBranding('launcher_icon', value, value);
   assert.throws(() => validateBranding('launcher_icon', 'default', 'uploaded.png'));
   assert.throws(() => validateBranding('notification_icon', 'ic_notification', 'ic_notification_star'));
   validateBranding('notification_icon', 'ic_notification_star', 'ic_notification_star');

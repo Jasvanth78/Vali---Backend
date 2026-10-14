@@ -1,6 +1,10 @@
-const launcherIcons = ['default', 'emerald', 'gold'];
+const launcherIcons = ['default', 'emerald', 'gold', 'blue', 'purple', 'red', 'pink', 'orange', 'teal', 'black', 'white'];
 const notificationIcons = ['ic_notification', 'ic_notification_star', 'ic_notification_compass'];
 function validateBranding(key, ta, en) {
+  if (key === 'launcher_shortcut_image') {
+    if (ta !== en || typeof en !== 'string' || en.length > 2048 || (en && !/^https?:\/\/[^\s]+$|^\/uploads\/[^\s]+$/.test(en))) throw new Error('Choose a valid uploaded shortcut image.');
+    return;
+  }
   if (key === 'notification_icon' && typeof en === 'string' && en.startsWith('{')) {
     const icon = customIcon(en);
     if (ta !== en || !icon) throw new Error('Choose a valid uploaded notification icon.');
