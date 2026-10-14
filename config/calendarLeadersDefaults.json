@@ -1,0 +1,50 @@
+[
+  {
+    "id": "leader-1",
+    "nameTa": "மகாகவி பாரதியார்",
+    "nameEn": "Subramania Bharati",
+    "imageUrl": "assets/images/calendar_bharathi_wide.png",
+    "date": "1882-12-11",
+    "captionTa": "அச்சமில்லை அச்சமில்லை அச்சமென்பதில்லையே!",
+    "captionEn": "Poet, freedom fighter and voice of social reform.",
+    "sourceUrl": "https://www.pib.gov.in/newsite/printrelease.aspx?lang=2&reg=3&relid=148927",
+    "remembrance": false,
+    "enabled": true
+  },
+  {
+    "id": "leader-2",
+    "nameTa": "காமராஜர்",
+    "nameEn": "K. Kamaraj",
+    "imageUrl": "assets/images/calendar_kamaraj_wide.png",
+    "date": "1903-07-15",
+    "captionTa": "கல்விக்கும் எளிமைக்கும் வழிகாட்டிய மக்கள் தலைவர்.",
+    "captionEn": "A people’s leader remembered for education and simplicity.",
+    "sourceUrl": "https://newindiasamachar.pib.gov.in/WriteReadData/flipbook/2023/Jul/1st/english/files/basic-html/page8.html",
+    "remembrance": false,
+    "enabled": true
+  },
+  {
+    "id": "leader-3",
+    "nameTa": "வீரபாண்டிய கட்டபொம்மன்",
+    "nameEn": "Veerapandiya Kattabomman",
+    "imageUrl": "assets/images/calendar_kattabomman_wide.png",
+    "date": "1799-10-16",
+    "captionTa": "விடுதலைக்காக வீரத்துடன் போராடிய தலைவர்.",
+    "captionEn": "A chieftain remembered for resisting colonial rule.",
+    "sourceUrl": "https://tnou.ac.in/NAAC/SSR/C1/1.1.5/5.BHYS-22.pdf",
+    "remembrance": true,
+    "enabled": true
+  },
+  {
+    "id": "leader-4",
+    "nameTa": "மகாகவி பாரதியார்",
+    "nameEn": "Subramania Bharati",
+    "imageUrl": "assets/images/calendar_bharathi_wide.png",
+    "date": "1921-09-11",
+    "captionTa": "அச்சமில்லை அச்சமில்லை அச்சமென்பதில்லையே!",
+    "captionEn": "Poet, freedom fighter and voice of social reform.",
+    "sourceUrl": "https://www.pib.gov.in/newsite/printrelease.aspx?lang=2&reg=3&relid=148927",
+    "remembrance": true,
+    "enabled": true
+  }
+]

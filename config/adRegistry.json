@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "pages": [
     {
       "key": "home",
@@ -100,6 +100,20 @@
         {
           "key": "between_cards",
           "label": "Between every fourth poster",
+          "formats": [
+            "banner",
+            "native"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "reels",
+      "label": "Reels / Videos",
+      "slots": [
+        {
+          "key": "bottom_banner",
+          "label": "Below the video player",
           "formats": [
             "banner",
             "native"

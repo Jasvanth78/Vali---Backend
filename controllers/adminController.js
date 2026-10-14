@@ -23,6 +23,12 @@ const getAppContent = async (req, res) => {
 
 const updateAppContent = async (req, res) => {
   const { key, ta, en } = req.body;
+  if (key === 'calendar_leaders') {
+    try {
+      require('../utils/calendarLeaders').validateCalendarLeaders(en);
+      if (ta !== en) throw new Error('Leader configuration must match in both content fields.');
+    } catch (error) { return res.status(400).json({ error: error.message }); }
+  }
   try { require('../utils/appBranding').validateBranding(key, ta, en); }
   catch (error) { return res.status(400).json({ error: error.message }); }
   if (key === 'home_layout' || key === 'home_weather_location') {

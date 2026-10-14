@@ -18,6 +18,8 @@ test('registry matches the bundled Flutter asset and rejects unsupported setting
   const asset = path.resolve(__dirname, '../../mobile_app/assets/ad_registry.json');
   if (fs.existsSync(asset)) assert.deepEqual(registry, JSON.parse(fs.readFileSync(asset, 'utf8')));
   assert.equal(validatePlacement(body).androidAdUnitId, unit);
+  assert.equal(validatePlacement({ ...body, pageKey: 'reels' }).placementKey, 'bottom_banner');
+  assert.throws(() => validatePlacement({ ...body, pageKey: 'reels', adFormat: 'rewarded' }), /Unsupported/);
   for (const invalid of [{ pageKey: 'unknown' }, { placementKey: 'arbitrary' }, { adFormat: 'rewarded' }, { androidAdUnitId: 'ca-app-pub-3940256099942544~3347511713' }, { iosAdUnitId: 'wrong' }, { frequencyCap: 1 }, { isEnabled: 'true' }, { sortOrder: -1 }]) {
     assert.throws(() => validatePlacement({ ...body, ...invalid }), /./);
   }
